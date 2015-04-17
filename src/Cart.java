@@ -28,7 +28,7 @@ public class Cart extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private static String User = null;
     private static String Pass = null;
-    private static String Page = "/FabFlix/Cart";
+    private static String Page = "/Fabflix/Cart";
 	private DataSource dataSource;
     private Connection connection;
     /**
@@ -74,7 +74,7 @@ public class Cart extends HttpServlet {
 	         session.setAttribute("Page", Page);
         }
         if (User.isEmpty() || Pass.isEmpty())
-       	 response.sendRedirect("/FabFlix/index.html");
+       	 response.sendRedirect("/Fabflix/index.html");
 	    try {
 			print(response, request);
 		} catch (SQLException e) {
@@ -163,7 +163,7 @@ public class Cart extends HttpServlet {
 			out.println("<script> function operation(opt) {"
 					+ "var x = document.getElementById(\"form" + iter_form  + "\");"
 					+ "var quant = x.elements[0].value;"
-					+ "var url = \"/FabFlix/Cart?MovieID=" + cart.getString("movie_id") + "&qty=\";"
+					+ "var url = \"/Fabflix/Cart?MovieID=" + cart.getString("movie_id") + "&qty=\";"
 					+ "url += quant;"
 					+ "url += \"&req=\";"
 					+ "url += opt;"

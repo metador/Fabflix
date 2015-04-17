@@ -9,6 +9,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
   <resource-ref>
   <description>
     Resource reference to a factory for java.sql.Connection
@@ -25,9 +26,5 @@
     Container
   </res-auth>
   </resource-ref>
-
-
-
-
-</web-app>
   
+</web-app>
