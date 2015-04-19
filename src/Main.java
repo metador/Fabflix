@@ -42,10 +42,11 @@ public class Main extends HttpServlet {
 		 out.println("<form action=/Fabflix/MovieList method='get'>");
 		 out.println("<input type=\"hidden\" name=\"by\" value=\"search\" />");
 		 out.println("<input type=\"text\" name=\"arg\"   Click here to search a movie...\"  maxlength=\"64\" />");
-		 out.println("<input type=\"hidden\" name=\"order\" value=\"asc\" />");
+		 out.println("<input type=\"hidden\" name=\"order\" value=\"t_asc\" />");
 	
 		 out.println("<button class=\"btn\" title=\"Submit Search\">Search</button>");
 		 out.println("</form><Br>");
+		 out.print("<a href =/Fabflix/advSearch > Advanced Search<a><br> ");
 		String loginUser = "root";
 	    String loginPasswd = "decodder";
 		String loginUrl = "jdbc:mysql://localhost:3306/moviedb";

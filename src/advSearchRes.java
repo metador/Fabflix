@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 /**
- * Servlet implementation class MovieList
+ * Servlet implementation class advSearchRes
  */
-@WebServlet("/MovieList")
-public class MovieList extends HttpServlet {
+@WebServlet("/advSearchRes")
+public class advSearchRes extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DataSource dataSource;
     private Connection connection;
@@ -51,42 +51,43 @@ public class MovieList extends HttpServlet {
 	String sipp= request.getParameter("ipp");
 	if(spage_id == null)
 		spage_id ="1";
-	String orderby= request.getParameter("order");
-	String order_accord="title";
-	String ordered_state ="t_asc";
-		if(orderby==null)
-			orderby ="ASC";
-		else{
-			ordered_state=orderby;
-			switch(orderby){
-			case "t_asc":
+	
+		String orderby= request.getParameter("order");
+		String order_accord="title";
+		String orderedStatus="t_asc";
+			if(orderby == null)
 				orderby ="ASC";
-				break;
-				case "t_desc":
-					orderby ="DESC";
-					break;
-				case "d_asc":
+			else{
+				orderedStatus=orderby;
+				switch(orderby){
+				case "t_asc":
 					orderby ="ASC";
-					order_accord="year";
 					break;
-				case "d_desc":
-					orderby ="DESC";
-					order_accord="year";
-					break;
+					case "t_desc":
+						orderby ="desc";
+						break;
+					case "d_asc":
+						orderby ="ASC";
+						order_accord="year";
+						break;
+					case "d_desc":
+						orderby ="desc";
+						order_accord="year";
+						break;
+				}
 			}
-		}
 	if(sipp==null)
 		sipp="5";
 	int page_id=Integer.parseInt(spage_id)-1;
 	int ipp=Integer.parseInt(sipp);
 	
-		switch(sort_by){
+	/*	switch(sort_by){
 		
 		case "genre" :
 			String genre_id=request.getParameter("arg");
 			query="select * from movies "+
 			      "join  genres_in_movies on movies.id=genres_in_movies.movie_id "+
-				  "where genres_in_movies.genre_id="+genre_id+" order by "+order_accord+" "+orderby+" LIMIT "+ipp+" OFFSET "+ipp*page_id; 
+				  "where genres_in_movies.genre_id="+genre_id+" order by title "+orderby+" LIMIT "+ipp+" OFFSET "+ipp*page_id; 
 			query_count="select count(*) from movies "+
 				      "join  genres_in_movies on movies.id=genres_in_movies.movie_id "+
 					  "where genres_in_movies.genre_id="+genre_id; 
@@ -94,59 +95,64 @@ public class MovieList extends HttpServlet {
 			break;
 		case "title" :
 			String title=request.getParameter("arg");
-			query="Select * from movies where title like '"+title+"%'"+" order by "+order_accord+" "+orderby+"LIMIT "+ipp+" OFFSET "+ipp*page_id ;
+			query="Select * from movies where title like '"+title+"%'"+" order by title "+orderby+"  LIMIT "+ipp+" OFFSET "+ipp*page_id ;
 			query_count="Select count(*) from movies where title like '"+title+"%'";
 			
 			break;
 			
 		case "search" :
 			String search_term=request.getParameter("arg");
-			query="Select * from movies where title like '%"+search_term.replace("'", "''")+"%'"+" order by "+order_accord+" "+orderby+"LIMIT "+ipp+" OFFSET "+ipp*page_id;
+			query="Select * from movies where title like '%"+search_term.replace("'", "''")+"%'"+" order by title "+orderby+"  LIMIT "+ipp+" OFFSET "+ipp*page_id;
 			query_count="Select count(*) from movies where title like '% "+search_term.replace("'", "''")+"%'";
 			//out.println(query);
 			break;
 			
-		case "advsearch" :
+		case "advsearch" :*/
+	
 			//String search_term=request.getParameter("arg");
-			query="select * from movies join stars_in_movies on stars_in_movies.movie_id=movies.id join stars on stars.id=stars_in_movies.star_id";
+			query="select  distinct title, movies.id ,  director,movies.year, banner_url, trailer_url  from movies join stars_in_movies on stars_in_movies.movie_id=movies.id join stars on stars.id=stars_in_movies.star_id";
 			//query_count="Select count(*) from movies where title like '% "+search_term.replace("'", "''")+"%'";
-			//out.println(query);
-			title = request.getParameter("title");
+			//out.println(query); 
+		
+			 
+			String title = request.getParameter("title");
 			String year = request.getParameter("year");
 			String director = request.getParameter("director");
 			String s_first = request.getParameter("s_first");
 			String s_last = request.getParameter("s_last");
 			if(!title.equals("")){
-				query=query+" where movies.title like '% "+title.replaceAll("'", "''")+"%'";
+				query=query+" and where movies.title like '% "+title.replaceAll("'", "''")+"%' ";
 			}
 			
 			if(!year.equals("")){
 				try{
 					int year_int=Integer.parseInt(year);
-					query=query+" and where movies.year="+year_int;
+					query=query+" and where movies.year='"+year_int+"'";
 				}
 				catch(NumberFormatException i){
 				}
 			}
 			if(!director.equals("")){
-				query=query+" and where director="+director.replaceAll("'", "''");
+				query=query+" and where director like '"+director.replaceAll("'", "''")+"%' ";
 			}
 			if(!s_first.equals("")){
-				query=query+" and where stars.first_name="+s_first.replaceAll("'", "''");
+				query=query+" and where stars.first_name='"+s_first.replaceAll("'", "''")+"'";
 			}
 			if(!s_last.equals("")){
-				query=query+" and where stars.last_name="+s_last.replaceAll("'", "''");
+				query=query+" and where stars.last_name='"+s_last.replaceAll("'", "''")+"'";
 			}
-			query_count=query.replace("*", "count(*)");
-			
-			break;
+			query=query.replaceFirst("and", "");
+			query_count=query.replace("distinct title", "count(distinct title)");
+			query=query + " order by "+order_accord+" "+orderby+" LIMIT "+ipp+" OFFSET "+ipp*page_id;
+		/*	brea
 		default:
 			break;
-		}
-		out.println("<a href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=t_asc >Title-> Asec</a>");
-		out.println("<a href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=t_desc >Title-> Dsec</a>");
-		out.println("<a href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=d_asc >Year-> Asec</a>");
-		out.println("<a href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=d_desc >Year-> Dsec</a>");
+		}*/
+		out.println("<a href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(page_id+1)+"&ipp="+ipp+"&order=t_asc >Title-> Asec</a>");
+		out.println("<a href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(page_id+1)+"&ipp="+ipp+"&order=t_desc >Title-> Dsec</a>");
+		out.println("<a href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(page_id+1)+"&ipp="+ipp+"&order=d_asc >Year-> Asec</a>");
+		out.println("<a href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(page_id+1)+"&ipp="+ipp+"&order=d_desc >Year-> Asec</a>");
+
 		out.println("<HTML><style>"
 				+ "#container {"
 				+ "padding:10%"
@@ -183,13 +189,17 @@ public class MovieList extends HttpServlet {
 			Integer count = countrs.getInt(1);
 			int i=page_id-2;
 			if(i<=0)i=1;
-			
-			for(;i<=page_id+5 && i<=count/ipp;i++)
-				out.println("<a href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(i)+"&ipp="+ipp+"&order="+ordered_state+" >"+i+"</a>");
+			int displayed_count=0;
+			for(;i<=page_id+5 ;i++)
+				if(displayed_count<=count)
+				{
+					displayed_count=displayed_count+ipp;
+					out.println("<a href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(i)+"&ipp="+ipp+"&order="+orderedStatus+" >"+i+"</a>");
+				}
 			out.print("<br>");
 			
 			for(int j=5;j<=25;j=j+5)
-				out.println("<right><a href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+j+"&order="+ordered_state+">"+j+"</a></right>");	
+				out.println("<right><a href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(1)+"&ipp="+j+"&order="+orderedStatus+">"+j+"</a></right>");	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -263,6 +273,7 @@ public class MovieList extends HttpServlet {
 		}
 		else
 		{
+			out.println("<h3>No results found</h3>");
 			//String mess="Username or password incorrect";
 			//response.sendRedirect("/Fabflix/index.html?message="+mess);
 		}
