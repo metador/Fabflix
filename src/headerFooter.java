@@ -15,7 +15,7 @@ public class headerFooter {
 	
 	public String banner()
 	{
-		String banner = "<body id=\"set_font\"><div id=\"banner\">" + 
+		String banner = "<body id=\"set_font\" bgcolor=\"#EFFFFF\"><div id=\"banner\">" + 
 				"<div>" + 
 				"<div class=\"home\"><img style=\"float:left;\"src=\"http://goo.gl/xuA1xS?gdriveurl\" height=\"34\" width=\"34\"><a class=\"links\" href=\"/Fabflix/Cart?MovieID=0&qty=0&req=View\">My Cart</a></div>" + 
 				"<div class=\"home\"><img style=\"float:left;\"src=\"http://goo.gl/wwTkAq?gdriveurl\" height=\"34\" width=\"34\"><a class=\"links\" href=\"/Fabflix/index.html\">Sign In</a></div>" + 
