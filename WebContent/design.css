@@ -14,6 +14,7 @@
 .home
 {
    float:right;
+   font-family: 'Roboto Condensed', sans-serif;
    background-color:#00CCFF;
    padding-top:20px;
    padding-bottom:20px;
@@ -22,6 +23,7 @@
    font-size:20px;
    text-decoration: none;
    color:white;
+   border:none;
 }
 .home:hover{
    background-color:#0099FF;

@@ -17,10 +17,10 @@ public class headerFooter {
 	{
 		String banner = "<body id=\"set_font\" bgcolor=\"#EFFFFF\"><div id=\"banner\">" + 
 				"<div>" + 
-				"<div class=\"home\"><img style=\"float:left;\"src=\"http://goo.gl/xuA1xS?gdriveurl\" height=\"34\" width=\"34\"><a class=\"links\" href=\"/Fabflix/Cart?MovieID=0&qty=0&req=View\">My Cart</a></div>" + 
-				"<div class=\"home\"><img style=\"float:left;\"src=\"http://goo.gl/wwTkAq?gdriveurl\" height=\"34\" width=\"34\"><a class=\"links\" href=\"/Fabflix/index.html\">Sign In</a></div>" + 
-				"<div class=\"home\"><img style=\"float:left;\"src=\"http://goo.gl/sAojdW?gdriveurl\" height=\"34\" width=\"34\"><a class=\"links\" href=\"/Fabflix/advSearchRes\">Advanced Search</a></div>" + 
-				"<div class=\"home\"><img style=\"float:left;\"src=\"http://goo.gl/RdfXu3?gdriveurl\" height=\"34\" width=\"34\"><a class=\"links\" href=\"/Fabflix/Main\">&nbspHome</a></div>" + 
+				"<button class=\"home\" onclick=\"location.href='/Fabflix/Cart?MovieID=0&qty=0&req=View'\"><img style=\"float:left;\"src=\"http://goo.gl/xuA1xS?gdriveurl\" height=\"34\" width=\"34\">My Cart</button>" + 
+				"<button class=\"home\" onclick=\"location.href='/Fabflix/index.html'\"><img style=\"float:left;\"src=\"http://goo.gl/wwTkAq?gdriveurl\" height=\"34\" width=\"34\">Sign In</button>" + 
+				"<button class=\"home\" onclick=\"location.href='/Fabflix/advSearch'\"><img style=\"float:left;\"src=\"http://goo.gl/sAojdW?gdriveurl\" height=\"34\" width=\"34\">Advanced Search</button>" + 
+				"<button class=\"home\" onclick=\"location='/Fabflix/Main'\"><img style=\"float:left;\"src=\"http://goo.gl/RdfXu3?gdriveurl\" height=\"34\" width=\"34\">&nbspHome</button>" + 
 				"<form action=/Fabflix/MovieList method='get'>" + 
 				"<input type=\"hidden\" name=\"by\" value=\"search\">" + 
 				"<button class=\"btn_srch\"><img src=\"http://goo.gl/vdKFWI?gdriveurl\" height=\"34\" width=\"34\"></button>" + 
