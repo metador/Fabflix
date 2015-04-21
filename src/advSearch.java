@@ -44,14 +44,14 @@ public class advSearch extends HttpServlet {
 	{
 		// TODO Auto-generated method stub;
 		try {
-			print("Inception", response, request);
+			print(response, request);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void print(String title, HttpServletResponse response, HttpServletRequest request) throws SQLException, IOException
+	public void print(HttpServletResponse response, HttpServletRequest request) throws SQLException, IOException
 	{
 		connection = (Connection) dataSource.getConnection();
 	//	int movie_id = Integer.parseInt(request.getParameter("MovieID"));

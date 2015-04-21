@@ -53,17 +53,18 @@ public class index extends HttpServlet {
 		 headerFooter base = new headerFooter();
 		 out.println(base.header());
 			out.println("<HEAD><TITLE>Login Page</TITLE></HEAD>");
-			out.println(base.banner());
 			
 
-		 out.println("<BODY><H1 ALIGN=\"CENTER\">Login</H1><FORM ACTION=\"/Fabflix/\" METHOD=\"POST\">"
-		 		+ "<center> Username: <INPUT TYPE=\"TEXT\" NAME=\"Username\"><BR><Br> Password: <INPUT TYPE=\"PASSWORD\" NAME=\"password\"><BR></center>"
-		 		+ " <CENTER><Br><INPUT TYPE=\"SUBMIT\" VALUE=\"Login\">");
+		 out.println("<div id='login'><div style='float:left;width:35%'>"
+		 		+ "<center><img src='http://png-2.findicons.com/files/icons/768/precious_metal/512/movie.png' height='192' width='192'></center>"
+				 + "<br><center><span style=\"font-family: 'Pacifico', cursive;font-size:50px;\">Fabflix</span></center></div>"
+		 		+ "<div style='float:right;width:55%'><H2 ALIGN=\"CENTER\">Login</H2><FORM =\"/Fabflix/\" METHOD=\"POST\">"
+		 		+ "<center> Username: <INPUT id='login_field' TYPE='TEXT' NAME=\"Username\"><BR><Br> Password: <INPUT id='login_field' TYPE=\"PASSWORD\" NAME=\"password\"></center><BR><BR><BR>"
+		 		+ " <CENTER><button class='login_btn' type='submit' style='font-size:20px;width:60%;'>"
+			+ "<img src='http://goo.gl/wwTkAq?gdriveurl' height='24' width='24'>Confirm</button></center></div></div>");
 
 		 if(message !=null)
 			 out.println("<br>"+message+"</br>");
-		 
-		 out.println(base.footer());
 		
 		response.setContentType("text/html");    // Response mime type
 		

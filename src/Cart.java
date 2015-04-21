@@ -75,8 +75,6 @@ public class Cart extends HttpServlet {
 	         Pass = (String) session.getAttribute("Pass");
 	         session.setAttribute("Page", Page);
         }
-        if (User == null || Pass == null)
-       	 response.sendRedirect("/Fabflix/index.html");
 	    try {
 			print(response, request);
 		} catch (SQLException e) {
@@ -92,8 +90,11 @@ public class Cart extends HttpServlet {
 		String custid = "Select id from customers where first_name = '" + User + "' and password = '" + Pass + "';";
 		PreparedStatement ps_custid = (PreparedStatement) connection.prepareStatement(custid);
 		ResultSet id = ps_custid.executeQuery();
-		id.next();
-		int customer_id = Integer.parseInt(id.getString("id"));
+		int customer_id = 0;
+		if (id.next())
+			customer_id = Integer.parseInt(id.getString("id"));
+		else
+			response.sendRedirect("/Fabflix/index.html");
 		
 		int movie_id = Integer.parseInt(request.getParameter("MovieID"));
 		if (movie_id != 0)

@@ -9,6 +9,7 @@ public class headerFooter {
 				"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />" + 
 				"<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>" + 
 				"<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>"
+				+ "<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>"
 				+ "<link rel=\"stylesheet\" href=\"design.css\" type=\"text/css\" />";
 		return head;
 	}
@@ -29,8 +30,8 @@ public class headerFooter {
 				"<div style=\"float:right;\"><input id=\"srch_box\" type=\"text\" name=\"arg\"   Click here to search a movie...\"  maxlength=\"64\"/></div>" + 
 				"<input type=\"hidden\" name=\"order\" value=\"t_asc\"/>" + 
 				"</form><Br>" + 
-				"<img style=\"margin-right:20px;float:left;\" src=\"http://png-2.findicons.com/files/icons/768/precious_metal/512/movie.png\" height=\"48\" width=\"48\"></a>" + 
-				"</div>" + 
+				"<img style=\"margin-right:20px;float:left;\" src=\"http://png-2.findicons.com/files/icons/768/precious_metal/512/movie.png\" height=\"48\" width=\"48\">" + 
+				"<span style=\"font-family: 'Pacifico', cursive;font-size:25px;\">Fabflix</span></div>" + 
 				"</div>" + 
 				"<br><br>" + 
 				"";
