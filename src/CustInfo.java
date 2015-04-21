@@ -76,7 +76,6 @@ public class CustInfo extends HttpServlet {
 	{
 		try {
 			connection = (Connection) dataSource.getConnection();
-			Statement statement = connection.createStatement();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -122,8 +121,7 @@ public class CustInfo extends HttpServlet {
 		+ "<img src='http://goo.gl/iCLKUa?gdriveurl' height='20' width='20'>Confirm</button><br><br>");
 		if(customer.next())
 		{
-			out.println("<div id=\"details\">");
-			out.println("<span style='padding-left:50px'>First Name : </span>");
+			out.println("<div><span style='padding-left:50px'>First Name : </span>");
 			out.println("<input id='cust_field' type='text' name='fname' value=" + customer.getString("first_name") + "><br><br>");
 			out.println("<span style='padding-left:50px'>Last Name : </span>");
 			out.println("<input id='cust_field' type='text' name='lname' value=" + customer.getString("last_name") + "><br><br>");

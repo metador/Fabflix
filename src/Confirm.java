@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -30,6 +31,7 @@ public class Confirm extends HttpServlet {
     private static String Page = "/Fabflix/Confirm";
 	private DataSource dataSource;
     private Connection connection;
+    headerFooter base = new headerFooter();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -56,6 +58,12 @@ public class Confirm extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			connection = (Connection) dataSource.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		HttpSession session = request.getSession();
 	    synchronized(session) 
 	    {
@@ -111,34 +119,22 @@ public class Confirm extends HttpServlet {
 		PreparedStatement ps_custinfo = (PreparedStatement) connection.prepareStatement(custinfo);
 		ResultSet customer = ps_custinfo.executeQuery();
 		
-		out.println("<HTML><style>"
-				+ "#container {"
-				+ "padding:10%"
-		 		+ "height:250px;"
-				+ "margin:20%;}"
-		 		+ "#details {"
-		 		+ "text-align:center;"
-		 		+ "padding:5px;"
-		 		+ "width:70%;"
-		 		+ "color:white;"
-		 		+ "background-color:black;"
-		 		+ "height:220px;"
-		 		+ "float:left;"
-		 		+ "}"
-		 		+ "</style>");
-		out.println("<HEAD><TITLE>Customer Info</TITLE></HEAD>");
-		out.println("<BODY><H1 ALIGN=\"CENTER\">Customer Details</H1></CENTER>");
+		out.println(base.header());
+		out.println("<HEAD><TITLE>Customer Details</TITLE></HEAD>");
+		out.println(base.banner());
+		
+		out.println("<form action='/Fabflix/Confirm' method='post'><div id=\"cust_info\">"
+				+ "<span style='font-size:35px'>My Info</span>"
+				+ "<button class='cart_btn' name='req' type='submit' value='Confirm' style='float:right;font-size:20px;'>"
+				+ "<img src='http://goo.gl/iCLKUa?gdriveurl' height='20' width='20'>Check Out</button><br><br>");
 		
 		if(customer.next())
 		{
-			out.println("<div id=\"container\"><div id=\"details\">");
-			out.println("<span class=\"title\">First Name = " + customer.getString("first_name") + "</span><br>");
-			out.println("<span class=\"title\">Last Name = " + customer.getString("last_name") + "</span><br>");
-			out.println("<span class=\"title\">Address = " + customer.getString("address") + "</span><br>");
-			out.println("<span class=\"title\">Email = " + customer.getString("email") + "</span><br>");
-			
-			out.println("<button type=\"button\" style=\"padding:10px;background-color:blue;color:white;\""
-					+ "onclick=\"window.location.href='/Fabflix/index.html';\">Check Out</button></div></div>");
+			out.println("<div>");
+			out.println("<span style='padding-left:50px'>First Name : </span><span style='padding-right:100px'>" + customer.getString("first_name") + "</span><br>");
+			out.println("<span style='padding-left:50px'>Last Name : </span><span style='padding-right:100px'>" + customer.getString("last_name") + "</span><br>");
+			out.println("<span style='padding-left:50px'>Address : </span><span style='padding-right:100px'>" + customer.getString("address") + "</span><br>");
+			out.println("<span style='padding-left:50px'>Email : </span><span style='padding-right:100px'>" + customer.getString("email") + "</span><br></div></div></form>");
 		}
 		
 		String query = "Select * from cart where customer_id like '" + customer_id + "'";
@@ -151,15 +147,13 @@ public class Confirm extends HttpServlet {
 				+ "<th>Quantity</th>"
 				+ "<th>Update</th>"
 				+ "<th>Remove</th></tr>");
-		
-		int iter_form = 0;
+
 		while(cart.next())
 		{
 			out.println("<tr><td>" + cart.getString("title") + "</td>");
 			out.println("<td>" + cart.getString("price") + "</td>");
 			out.println("<td>" + cart.getString("quantity") + "</td>");
 			out.println("</tr>");
-			iter_form++;
 		}
 		out.println("</table>");
 		
