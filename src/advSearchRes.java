@@ -121,7 +121,7 @@ public class advSearchRes extends HttpServlet {
 			String s_first = request.getParameter("s_first");
 			String s_last = request.getParameter("s_last");
 			if(!title.equals("")){
-				query=query+" and where movies.title like '% "+title.replaceAll("'", "''")+"%' ";
+				query=query+" and where movies.title like '%"+title.replaceAll("'", "''")+"%' ";
 			}
 			
 			if(!year.equals("")){
@@ -139,7 +139,7 @@ public class advSearchRes extends HttpServlet {
 				query=query+" and where stars.first_name='"+s_first.replaceAll("'", "''")+"'";
 			}
 			if(!s_last.equals("")){
-				query=query+" and where stars.last_name='"+s_last.replaceAll("'", "''")+"'";
+				query=query+" and where stars.last_name= '"+s_last.replaceAll("'", "''")+"'";
 			}
 			query=query.replaceFirst("and", "");
 			query_count=query.replace("distinct title", "count(distinct title)");
@@ -268,7 +268,6 @@ public class advSearchRes extends HttpServlet {
 				
 				out.println("<a href=\"" + movies.getString("trailer_url") + "\">Watch Trailer</a></div></div><br><br><br><br>");
 			} while (movies.next());
-			
 			
 		}
 		else
