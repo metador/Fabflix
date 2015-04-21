@@ -20,7 +20,8 @@ public class advSearchRes extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DataSource dataSource;
     private Connection connection;
-       
+	String sort_by = null;
+	int ipp = 0;
     /**
      * @param connection 
      * @see HttpServlet#HttpServlet()
@@ -44,9 +45,11 @@ public class advSearchRes extends HttpServlet {
 	{
 		// TODO Auto-generated method stub;
 		PrintWriter out = response.getWriter();
-		String sort_by = request.getParameter("by");
+		headerFooter base = new headerFooter();
+		 sort_by = request.getParameter("by");
 		String query=null;
 		String query_count="0";
+		
 	String spage_id= request.getParameter("page_id");
 	String sipp= request.getParameter("ipp");
 	if(spage_id == null)
@@ -79,7 +82,7 @@ public class advSearchRes extends HttpServlet {
 	if(sipp==null)
 		sipp="5";
 	int page_id=Integer.parseInt(spage_id)-1;
-	int ipp=Integer.parseInt(sipp);
+	   ipp=Integer.parseInt(sipp);
 	
 	/*	switch(sort_by){
 		
@@ -133,28 +136,32 @@ public class advSearchRes extends HttpServlet {
 				}
 			}
 			if(!director.equals("")){
-				query=query+" and  director like '"+director.replaceAll("'", "''")+"%' ";
+				query=query+" and  director like '%"+director.replaceAll("'", "''")+"%' ";
 			}
 			if(!s_first.equals("")){
 				query=query+" and stars.first_name='"+s_first.replaceAll("'", "''")+"'";
 			}
 			if(!s_last.equals("")){
-				query=query+" and where stars.last_name= '"+s_last.replaceAll("'", "''")+"'";
+				query=query+" and stars.last_name= '"+s_last.replaceAll("'", "''")+"'";
 			}
 			query=query.replaceFirst("and", "");
 			query_count=query.replace("distinct title", "count(distinct title)");
 			query=query + " order by "+order_accord+" "+orderby+" LIMIT "+ipp+" OFFSET "+ipp*page_id;
-		out.println("<HTML>"+query+ " ");
+	//	out.println(""+query+ " ");
 			/*	brea
 		default:
 			break;
-		}*/
+		}
 		out.println("<a href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(page_id+1)+"&ipp="+ipp+"&order=t_asc >Title-> Asec</a>");
 		out.println("<a href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(page_id+1)+"&ipp="+ipp+"&order=t_desc >Title-> Dsec</a>");
 		out.println("<a href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(page_id+1)+"&ipp="+ipp+"&order=d_asc >Year-> Asec</a>");
 		out.println("<a href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(page_id+1)+"&ipp="+ipp+"&order=d_desc >Year-> Asec</a>");
-
-		out.println("<style>"
+		*/
+		out.println(base.header());
+		out.println("<HEAD><TITLE>Advanced Movie Search</TITLE></HEAD>");
+		out.println(base.banner());
+		
+	/*	out.println("<HTML><style>"
 				+ "#container {"
 				+ "padding:10%"
 		 		+ "height:250px;"
@@ -177,7 +184,7 @@ public class advSearchRes extends HttpServlet {
 		 		+ "}"
 		 		+ "</style>");
 		out.println("<HEAD><TITLE>login</TITLE></HEAD>");
-		out.println("<BODY><H1 ALIGN=\"CENTER\">Movie Details</H1></CENTER>");
+		out.println("<BODY><H1 ALIGN=\"CENTER\">Movie Details</H1></CENTER>"); */
 		
 		try {
 			connection = (Connection) dataSource.getConnection();
@@ -191,16 +198,22 @@ public class advSearchRes extends HttpServlet {
 			int i=page_id-2;
 			if(i<=0)i=1;
 			int displayed_count=0;
+			out.println("<tr style=\"background-color:#00CCFF;\"><td align=\"center\">");
 			for(;i<=page_id+5 ;i++)
 				if(displayed_count<=count)
 				{
 					displayed_count=displayed_count+ipp;
-					out.println("<a href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(i)+"&ipp="+ipp+"&order="+orderedStatus+" >"+i+"</a>");
+					out.println("<a style=\"float:left\" class=\"ft_links\" href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(i)+"&ipp="+ipp+"&order="+orderedStatus+" >"+i+"</a>");
 				}
+			out.println("<span style=\"float:left;color:white;margin-top:10px;font-weight: bold;\">&nbsp&nbsp&nbsp<--Page Number</span>");
+
 			out.print("<br>");
 			
 			for(int j=5;j<=25;j=j+5)
-				out.println("<right><a href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(1)+"&ipp="+j+"&order="+orderedStatus+">"+j+"</a></right>");	
+				out.println("<a  style=\"float:right\" class=\"ft_links\" href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(1)+"&ipp="+j+"&order="+orderedStatus+">"+j+"</a>");	
+			out.println("<span style=\"float:right;color:white;margin-top:10px;font-weight: bold;\">Items per page-->&nbsp&nbsp&nbsp</span>");
+			out.println("</td></tr></table>");
+			out.println(base.footer());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -214,12 +227,23 @@ public class advSearchRes extends HttpServlet {
 		//PreparedStatement ps_movies = (PreparedStatement) connection.prepareStatement(query);
 		ResultSet movies = result;
 		PrintWriter out = response.getWriter();
-		
-	
-		out.println("<h4 align=\"right\"><a href=\"/Fabflix/Cart?MovieID=0\">My Cart</a></h4><br>");
+		int size = 0;
+
+		out.println("<table id=\"srch_res\"><tr style=\"background-color:#00CCFF;\"><th>");
+		out.println("<h2 style=\"margin-left:10%;\">Search Results:</h2></th></tr>"
+				+ "<tr style=\"background-color:#00CCFF;\"><td align=\"center\" >");
+		out.println("<div align\"center\"><a class=\"sort_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=t_asc>"
+				+ "<img src=\"http://goo.gl/QklvbJ?gdriveurl\" height='34' width='34'>Title</a>");
+		out.println("<a class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=t_desc >Title</a>");
+		out.println("<a class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=d_asc >Year-> Asec</a>");
+		out.println("<a class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=d_desc >Year-> Dsec</a>"
+				+ "</div><br></td></tr>");
 		if (movies.next())
 		{
-			do
+			while (movies.next());
+				size++;
+			movies.first();
+	     	do
 			{
 				String star_query = "Select distinct(a.first_name), a.last_name, a.id from stars a "
 						+ "where a.id in (select distinct(b.star_id) from stars_in_movies b "
@@ -233,41 +257,47 @@ public class advSearchRes extends HttpServlet {
 				PreparedStatement ps_genres = (PreparedStatement) connection.prepareStatement(genre_query);
 				ResultSet genres = ps_genres.executeQuery();
 				
-				out.println("<div id=\"container\"><div id=\"image\">");
-				out.println("<img style=\"width:110;height;160;\"src=\"" + movies.getString("banner_url")
-						+ "\" alt=\"" + movies.getString("title") + " DVD Cover\"><br><br>");
-				out.println("<button type=\"button\" style=\"padding:10px;background-color:blue;color:white;\""
-						+ "onclick=\"window.location.href='/Fabflix/Cart?MovieID=" + movies.getString("id") + "&qty=1&req=add';\">Add to Cart</button></div>");
-				out.println("<span class=\"title\">Movie = </span>"
-						+ "<a class=\"title\" href=\"/Fabflix/Movie?MovieID=" + movies.getString("id") + "\">" + movies.getString("title") + "</a><br>");
-				out.println("<span class=\"title\">Year = " + movies.getString("year") + "</span><br>");
-				out.println("<span class=\"title\">Director = " + movies.getString("director") + "</span><br>");
 				
-				out.println("<span class=\"title\">Actors = ");
-				int size = 0;
+				
+				out.println("<tr><td><br><br>" + 
+						"<div>" + 
+						"<table  id=\"movie_search\"><tr><td width=\"20%;\"><div id=\"mov_list\">" + 
+						"<img  style=\"position:absolute;z-index:1;margin-top:30px;margin-left:75px;\" src=\"" + movies.getString("banner_url") + "\"  alt=\"" + movies.getString("title") + " DVD Cover\" height='188' width='120'>" + 
+						"<img style=\"z-index:2;\" src=\"http://gateway.hopto.org:9000/fabflix/images/short-case.png\" height='250' width='255'></div></td>" + 
+						"<td width=\"40%;\"><div id=\"mov_det\">" + 
+						"<div style=\"float:left;width:10%;\"><span style=\"font-weight: bold;\">Movie: </span></div>"
+						+ "<div style=\"float:right;width:90%;\"><a class=\"ag_links\" style=\"font-size:18px;\" href=\"/Fabflix/Movie?MovieID=" + movies.getString("id") + "\">" + movies.getString("title") + "</a></div><br>" + 
+						"<br><span>Year: " + movies.getString("year") + "</span><br>" + 
+						"<br><span>Director: " + movies.getString("director") + "</span><br>" + 
+						"<br><div style=\"float:left;width:10%;\"><span style=\"font-style: italic;\">Actors: </span></div><div style=\"float:right;width:90%;\"><span>");
 				while (stars.next())
-					size++;
-				stars.first();
-				do
 				{
-					out.println("<a href=\"/Fabflix/Star?StarID=" + stars.getString("id") + "\">"
+					out.println("<a class=\"ag_links\" href=\"/Fabflix/Star?StarID=" + stars.getString("id") + "\">"
 							+ stars.getString("first_name") + " " + stars.getString("last_name") + "</a>");
-					if (size != 1)
-						out.println(", ");
-					size--;
-				} while (stars.next());
-				out.println("</span><br>");
-				
-				out.println("<span class=\"title\">Genre = ");
+
+				} 
+	         out.println("</span></div><br><br><span style=\"font-style: italic;\">Genre: ");
 				String genre_list = "";
 				while (genres.next())
 				{
 					genre_list += (genres.getString("name") + ", ");
 				}
 				genre_list = genre_list.substring(0, genre_list.length()-2);
-				out.println(genre_list + "</span><br>");
-				
-				out.println("<a href=\"" + movies.getString("trailer_url") + "\">Watch Trailer</a></div></div><br><br><br><br>");
+				out.println(genre_list + "</span><br><br>");
+	         
+	         
+	         
+	         out.println("<span>Price: [$12.45]</span><br></div></td></tr>" + 
+						"<tr><td class=\"cart\"><img style=\"float:left;padding-left:30%;\" src=\"http://goo.gl/xuA1xS?gdriveurl\" height=\"24\" width=\"24\">" + 
+						"<a class=\"links\" href='/Fabflix/Cart?MovieID=" + movies.getString("id") + "&qty=1&req=Add'\">&nbspAdd to My Cart</a></td>" + 
+						"<td class=\"cart\"><img style=\"float:left;padding-left:30%;\" src=\"http://goo.gl/rXhBkP?gdriveurl\" height=\"24\" width=\"24\">" + 
+						"<a class=\"links\" href='" + movies.getString("trailer_url") + "'\">&nbspWatch Trailer</a></td>" + 
+						"</tr></table>" + 
+						"</div>" + 
+						"<br></td></tr>"); 
+	         if (size > 1)
+	        	 out.println("<hr id=\"line\">");
+	         size--;
 			} while (movies.next());
 			
 		}

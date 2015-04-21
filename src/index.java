@@ -50,13 +50,18 @@ public class index extends HttpServlet {
 		// TODO Auto-generated method stub
 		 PrintWriter out = response.getWriter();
 		 String message = request.getParameter("message");
-		 out.println("<HTML><HEAD><TITLE>login</TITLE></HEAD>");
+		 headerFooter base = new headerFooter();
+		 out.println(base.header());
+			out.println("<HEAD><TITLE>Login Page</TITLE></HEAD>");
+			out.println(base.banner());
+			
 
-		 out.println("<BODY><H1 ALIGN=\"CENTER\">Loginform</H1><FORM ACTION=\"/Fabflix/\" METHOD=\"POST\">"
-		 		+ "<center> Username: <INPUT TYPE=\"TEXT\" NAME=\"Username\"><BR> Password: <INPUT TYPE=\"PASSWORD\" NAME=\"password\"><BR></center>"
-		 		+ " <CENTER><INPUT TYPE=\"SUBMIT\" VALUE=\"Submit Order\">");
+		 out.println("<BODY><H1 ALIGN=\"CENTER\">Login</H1><FORM ACTION=\"/Fabflix/\" METHOD=\"POST\">"
+		 		+ "<center> Username: <INPUT TYPE=\"TEXT\" NAME=\"Username\"><BR><Br> Password: <INPUT TYPE=\"PASSWORD\" NAME=\"password\"><BR></center>"
+		 		+ " <CENTER><Br><INPUT TYPE=\"SUBMIT\" VALUE=\"Login\">");
 
 		 if(message !=null)out.println("<br>"+message+"</br>");
+		 out.println(base.footer());
 		 out.println("</CENTER>");
 		 out.println("</FORM>");
 	     out.println("</BODY>");

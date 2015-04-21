@@ -59,6 +59,10 @@ public class advSearch extends HttpServlet {
 		//PreparedStatement ps_movies = (PreparedStatement) connection.prepareStatement(query);
 		//ResultSet movies = ps_movies.executeQuery();
 		PrintWriter out = response.getWriter();
+		 headerFooter base = new headerFooter();
+		 out.println(base.header());
+			out.println("<HEAD><TITLE>Login Page</TITLE></HEAD>");
+			out.println(base.banner());
 		
 		String s = "<div align=\"center\">"+
         "<fieldset style=\"width: 500px\" class=\"field\">"+
@@ -158,6 +162,7 @@ public class advSearch extends HttpServlet {
         "</div>";	          
 out.print(s);
 out.println(s2);
+out.println(base.footer());
 	}
 	
 	/**

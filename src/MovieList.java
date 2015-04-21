@@ -96,21 +96,21 @@ public class MovieList extends HttpServlet {
 			break;
 		case "title" :
 			String title=request.getParameter("arg");
-			query="Select * from movies where title like '"+title+"%'"+" order by "+order_accord+" "+orderby+"LIMIT "+ipp+" OFFSET "+ipp*page_id ;
+			query="Select * from movies where title like '"+title+"%'"+" order by "+order_accord+" "+orderby+" LIMIT "+ipp+" OFFSET "+ipp*page_id ;
 			query_count="Select count(*) from movies where title like '"+title+"%'";
 			
 			break;
 			
 		case "search" :
 			String search_term=request.getParameter("arg");
-			query="Select * from movies where title like '%"+search_term.replace("'", "''")+"%'"+" order by "+order_accord+" "+orderby+"LIMIT "+ipp+" OFFSET "+ipp*page_id;
+			query="Select * from movies where title like '%"+search_term.replace("'", "''")+"%'"+" order by "+order_accord+" "+orderby+" LIMIT "+ipp+" OFFSET "+ipp*page_id;
 			query_count="Select count(*) from movies where title like '% "+search_term.replace("'", "''")+"%'";
 			//out.println(query);
 			break;
 			
 		case "advsearch" :
 			//String search_term=request.getParameter("arg");
-			query="select * from movies join stars_in_movies on stars_in_movies.movie_id=movies.id join stars on stars.id=stars_in_movies.star_id";
+			query="select * from movies join stars_in_movies on stars_in_movies.movie_id=movies.id join stars on stars.id=stars_in_movies.star_id ";
 			//query_count="Select count(*) from movies where title like '% "+search_term.replace("'", "''")+"%'";
 			//out.println(query);
 			title = request.getParameter("title");
@@ -163,11 +163,11 @@ public class MovieList extends HttpServlet {
 			int i=page_id-2;
 			if(i<=0)i=1;
 			out.println("<tr style=\"background-color:#00CCFF;\"><td align=\"center\">");
-			for(;i<=page_id+5 && i<=count/ipp;i++)
-				out.println("<a style=\"float:left\" class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(i)+"&ipp="+ipp+"&order="+orderby+" >"+i+"</a>");
+			for(;i<=page_id+5 && i<=count/ipp;i++) // for pagenation
+				out.println("<a style=\"float:left\" class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(i)+"&ipp="+ipp+"&order="+ordered_state+" >"+i+"</a>");
 			out.println("<span style=\"float:left;color:white;margin-top:10px;font-weight: bold;\">&nbsp&nbsp&nbsp<--Page Number</span>");
-			for(int j=5;j<=25;j=j+5)
-				out.println("<a style=\"float:right\" class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+j+"&order="+orderby+">"+j+"</a>");	
+			for(int j=5;j<=25;j=j+5)  // to set movies per page
+				out.println("<a style=\"float:right\" class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+j+"&order="+ordered_state+">"+j+"</a>");	
 			out.println("<span style=\"float:right;color:white;margin-top:10px;font-weight: bold;\">Items per page-->&nbsp&nbsp&nbsp</span>");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

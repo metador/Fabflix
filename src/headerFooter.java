@@ -25,7 +25,7 @@ public class headerFooter {
 				"<input type=\"hidden\" name=\"by\" value=\"search\">" + 
 				"<button class=\"btn_srch\"><img src=\"http://goo.gl/vdKFWI?gdriveurl\" height=\"34\" width=\"34\"></button>" + 
 				"<div style=\"float:right;\"><input id=\"srch_box\" type=\"text\" name=\"arg\"   Click here to search a movie...\"  maxlength=\"64\"/></div>" + 
-				"<input type=\"hidden\" name=\"order\" value=\"asc\"/><input type=\"hidden\" name=\"order\" value=\"asc\" />" + 
+				"<input type=\"hidden\" name=\"order\" value=\"t_asc\"/>" + 
 				"</form><Br>" + 
 				"<img style=\"margin-right:20px;float:left;\" src=\"http://png-2.findicons.com/files/icons/768/precious_metal/512/movie.png\" height=\"48\" width=\"48\"></a>" + 
 				"</div>" + 

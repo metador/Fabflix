@@ -150,6 +150,7 @@ public class Main extends HttpServlet {
 	   out.println("<a class=\"title_srch\" href=/Fabflix/MovieList?by=title&arg=9>9</a>");
 	   out.println("<a class=\"title_srch\" href=/Fabflix/MovieList?by=title&arg=0>0</a>");
 	   out.println("</div></div>");
+	   out.println("<BR>");
 	   }
 		  catch (SQLException ex) {
               while (ex != null) {
