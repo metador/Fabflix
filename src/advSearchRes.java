@@ -110,7 +110,7 @@ public class advSearchRes extends HttpServlet {
 		case "advsearch" :*/
 	
 			//String search_term=request.getParameter("arg");
-			query="select  distinct title, movies.id ,  director,movies.year, banner_url, trailer_url  from movies join stars_in_movies on stars_in_movies.movie_id=movies.id join stars on stars.id=stars_in_movies.star_id";
+			query="select  distinct title, movies.id ,  director,movies.year, banner_url, trailer_url  from movies join stars_in_movies on stars_in_movies.movie_id=movies.id join stars on stars.id=stars_in_movies.star_id where ";
 			//query_count="Select count(*) from movies where title like '% "+search_term.replace("'", "''")+"%'";
 			//out.println(query); 
 		
@@ -121,22 +121,22 @@ public class advSearchRes extends HttpServlet {
 			String s_first = request.getParameter("s_first");
 			String s_last = request.getParameter("s_last");
 			if(!title.equals("")){
-				query=query+" and where movies.title like '%"+title.replaceAll("'", "''")+"%' ";
+				query=query+" and movies.title like '%"+title.replaceAll("'", "''")+"%' ";
 			}
 			
 			if(!year.equals("")){
 				try{
 					int year_int=Integer.parseInt(year);
-					query=query+" and where movies.year='"+year_int+"'";
+					query=query+" and movies.year='"+year_int+"'";
 				}
 				catch(NumberFormatException i){
 				}
 			}
 			if(!director.equals("")){
-				query=query+" and where director like '"+director.replaceAll("'", "''")+"%' ";
+				query=query+" and  director like '"+director.replaceAll("'", "''")+"%' ";
 			}
 			if(!s_first.equals("")){
-				query=query+" and where stars.first_name='"+s_first.replaceAll("'", "''")+"'";
+				query=query+" and stars.first_name='"+s_first.replaceAll("'", "''")+"'";
 			}
 			if(!s_last.equals("")){
 				query=query+" and where stars.last_name= '"+s_last.replaceAll("'", "''")+"'";
@@ -144,7 +144,8 @@ public class advSearchRes extends HttpServlet {
 			query=query.replaceFirst("and", "");
 			query_count=query.replace("distinct title", "count(distinct title)");
 			query=query + " order by "+order_accord+" "+orderby+" LIMIT "+ipp+" OFFSET "+ipp*page_id;
-		/*	brea
+		out.println("<HTML>"+query+ " ");
+			/*	brea
 		default:
 			break;
 		}*/
@@ -153,7 +154,7 @@ public class advSearchRes extends HttpServlet {
 		out.println("<a href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(page_id+1)+"&ipp="+ipp+"&order=d_asc >Year-> Asec</a>");
 		out.println("<a href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(page_id+1)+"&ipp="+ipp+"&order=d_desc >Year-> Asec</a>");
 
-		out.println("<HTML><style>"
+		out.println("<style>"
 				+ "#container {"
 				+ "padding:10%"
 		 		+ "height:250px;"

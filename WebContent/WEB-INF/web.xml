@@ -10,7 +10,7 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <resource-ref>
-<<<<<<< HEAD
+
   <description>
     Resource reference to a factory for java.sql.Connection
     instances that may be used for talking to a particular
@@ -23,11 +23,6 @@
     javax.sql.DataSource
   </res-type>
 
-=======
-    <description>DB Connection</description>
-    <res-ref-name>jdbc/moviedb</res-ref-name>
-    <res-type>javax.sql.DataSource</res-type>
-    <res-auth>Container</res-auth>
->>>>>>> 11204718e375f58ce40e1deeb62bde0eb6e16dd9
+
   </resource-ref>
 </web-app>

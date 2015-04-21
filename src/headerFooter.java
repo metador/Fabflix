@@ -19,7 +19,7 @@ public class headerFooter {
 				"<div>" + 
 				"<div class=\"home\"><img style=\"float:left;\"src=\"http://goo.gl/xuA1xS?gdriveurl\" height=\"34\" width=\"34\"><a class=\"links\" href=\"/Fabflix/Cart?MovieID=0&qty=0&req=View\">My Cart</a></div>" + 
 				"<div class=\"home\"><img style=\"float:left;\"src=\"http://goo.gl/wwTkAq?gdriveurl\" height=\"34\" width=\"34\"><a class=\"links\" href=\"/Fabflix/index.html\">Sign In</a></div>" + 
-				"<div class=\"home\"><img style=\"float:left;\"src=\"http://goo.gl/sAojdW?gdriveurl\" height=\"34\" width=\"34\"><a class=\"links\" href=\"/Fabflix/advSearchRes\">Advanced Search</a></div>" + 
+				"<div class=\"home\"><img style=\"float:left;\"src=\"http://goo.gl/sAojdW?gdriveurl\" height=\"34\" width=\"34\"><a class=\"links\" href=\"/Fabflix/advSearch\">Advanced Search</a></div>" + 
 				"<div class=\"home\"><img style=\"float:left;\"src=\"http://goo.gl/RdfXu3?gdriveurl\" height=\"34\" width=\"34\"><a class=\"links\" href=\"/Fabflix/Main\">&nbspHome</a></div>" + 
 				"<form action=/Fabflix/MovieList method='get'>" + 
 				"<input type=\"hidden\" name=\"by\" value=\"search\">" + 
