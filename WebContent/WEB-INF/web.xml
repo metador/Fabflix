@@ -17,14 +17,12 @@
     database that is configured in the server.xml file.
   </description>
   <res-ref-name>
-    jdbc/TestDB
+    jdbc/moviedb
   </res-ref-name>
   <res-type>
     javax.sql.DataSource
   </res-type>
-  <res-auth>
-    Container
-  </res-auth>
+
   </resource-ref>
   
 </web-app>
