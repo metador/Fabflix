@@ -60,12 +60,11 @@ public class index extends HttpServlet {
 		 		+ "<center> Username: <INPUT TYPE=\"TEXT\" NAME=\"Username\"><BR><Br> Password: <INPUT TYPE=\"PASSWORD\" NAME=\"password\"><BR></center>"
 		 		+ " <CENTER><Br><INPUT TYPE=\"SUBMIT\" VALUE=\"Login\">");
 
-		 if(message !=null)out.println("<br>"+message+"</br>");
+		 if(message !=null)
+			 out.println("<br>"+message+"</br>");
+		 
 		 out.println(base.footer());
-		 out.println("</CENTER>");
-		 out.println("</FORM>");
-	     out.println("</BODY>");
-		 out.println("</HTML>");
+		
 		response.setContentType("text/html");    // Response mime type
 		
 		    // Output stream to STDOUT
