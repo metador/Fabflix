@@ -1,4 +1,10 @@
-#banner
+ html, body, div {
+     margin: 0;
+     padding: 0;
+     bottom:0;
+     top:0;
+ }
+ #banner
 {
    height:74px;
    background-color:#00CCFF;
@@ -109,17 +115,15 @@
 }
 #footline
 {
-   margin-top:20px;
-   height:150px;
+   height:100px;
    background-color:#00CCFF;
-   font-family: 'Roboto Condensed', sans-serif;
    color:white;
+   padding:20px;
 }
 #footlinks
 {
    margin-left:30%;
    margin-right:30%;
-   padding:20px;
 }
 .ft_links
 {
@@ -252,4 +256,46 @@
 .sort_links:hover{
    background-color:white;
    color:#0099FF;
+}
+#cart_res
+{
+   width:60%;
+   align:center;
+   margin-bottom:20px;
+   margin-left:20%;
+   margin-right:20%;
+   border-radius: 8px 8px 8px 8px;
+   border-style: solid;
+   border-width: 3px;
+   border-color:#00CCFF;
+   border-collapse: collapse;
+   padding:10px;
+}
+#cart_title
+{
+   height:25px;
+   background-color:#00CCFF;
+   font-size:20px;
+   color:white;
+    margin-left:20%;
+    margin-right:20%;
+    border-radius: 8px 8px 0px 0px;
+    border-style: solid;
+    border-width: 3px;
+    border-color:#00CCFF;
+    padding:10px;
+}
+.cart_btn
+{
+   float:left;
+   background-color:#0099FF;
+   margin:5px;
+   padding:5px;
+   font-size:15px;
+   text-decoration: none;
+   color:white;
+   border:none;
+}
+.cart_btn:hover{
+   background-color:#00CC00;
 }

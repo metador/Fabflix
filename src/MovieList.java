@@ -88,7 +88,7 @@ public class MovieList extends HttpServlet {
 			String genre_id=request.getParameter("arg");
 			query="select * from movies "+
 			      "join  genres_in_movies on movies.id=genres_in_movies.movie_id "+
-				  "where genres_in_movies.genre_id="+genre_id+" order by title "+orderby+" LIMIT "+ipp+" OFFSET "+ipp*page_id; 
+			      "where genres_in_movies.genre_id="+genre_id+" order by "+order_accord+" "+orderby+" LIMIT "+ipp+" OFFSET "+ipp*page_id; 
 			query_count="select count(*) from movies "+
 				      "join  genres_in_movies on movies.id=genres_in_movies.movie_id "+
 					  "where genres_in_movies.genre_id="+genre_id; 
@@ -96,17 +96,53 @@ public class MovieList extends HttpServlet {
 			break;
 		case "title" :
 			String title=request.getParameter("arg");
-			query="Select * from movies where title like '"+title+"%'"+" order by title "+orderby+"  LIMIT "+ipp+" OFFSET "+ipp*page_id ;
+			query="Select * from movies where title like '"+title+"%'"+" order by "+order_accord+" "+orderby+"LIMIT "+ipp+" OFFSET "+ipp*page_id ;
 			query_count="Select count(*) from movies where title like '"+title+"%'";
 			
 			break;
 			
 		case "search" :
 			String search_term=request.getParameter("arg");
-			query="Select * from movies where title like '%"+search_term.replace("'", "''")+"%'"+" order by title "+orderby+"  LIMIT "+ipp+" OFFSET "+ipp*page_id;
+			query="Select * from movies where title like '%"+search_term.replace("'", "''")+"%'"+" order by "+order_accord+" "+orderby+"LIMIT "+ipp+" OFFSET "+ipp*page_id;
 			query_count="Select count(*) from movies where title like '% "+search_term.replace("'", "''")+"%'";
 			//out.println(query);
 			break;
+			
+		case "advsearch" :
+			//String search_term=request.getParameter("arg");
+			query="select * from movies join stars_in_movies on stars_in_movies.movie_id=movies.id join stars on stars.id=stars_in_movies.star_id";
+			//query_count="Select count(*) from movies where title like '% "+search_term.replace("'", "''")+"%'";
+			//out.println(query);
+			title = request.getParameter("title");
+			String year = request.getParameter("year");
+			String director = request.getParameter("director");
+			String s_first = request.getParameter("s_first");
+			String s_last = request.getParameter("s_last");
+			if(!title.equals("")){
+				query=query+" where movies.title like '% "+title.replaceAll("'", "''")+"%'";
+			}
+			
+			if(!year.equals("")){
+				try{
+					int year_int=Integer.parseInt(year);
+					query=query+" and where movies.year="+year_int;
+				}
+				catch(NumberFormatException i){
+				}
+			}
+			if(!director.equals("")){
+				query=query+" and where director="+director.replaceAll("'", "''");
+			}
+			if(!s_first.equals("")){
+				query=query+" and where stars.first_name="+s_first.replaceAll("'", "''");
+			}
+			if(!s_last.equals("")){
+				query=query+" and where stars.last_name="+s_last.replaceAll("'", "''");
+			}
+			query_count=query.replace("*", "count(*)");
+			
+			break;	
+			
 		default:
 			break;
 		}
