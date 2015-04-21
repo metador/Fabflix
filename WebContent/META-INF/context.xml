@@ -1,9 +1,7 @@
-<?xml version="1.0"?>
-
 <!--?xml version="1.0" encoding="UTF-8"?-->
-
-<context path="/Fabflix">
-
-<Resource url="jdbc:mysql://localhost:3306/moviedb" driverClassName="com.mysql.jdbc.Driver" password="decodder" username="root" maxWait="10000" maxIdle="30" maxActive="100" type="javax.sql.DataSource" auth="Container" name="jdbc/moviedb"/>
-
+<context>
+    <Resource name="jdbc/moviedb" auth="Container" type="javax.sql.DataSource"
+               maxActive="100" maxIdle="30" maxWait="10000"
+               username="testuser" password="testpass" driverClassName="com.mysql.jdbc.Driver"
+               url="jdbc:mysql:///moviedb"/>
 </context>
