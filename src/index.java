@@ -40,7 +40,7 @@ public class index extends HttpServlet {
 		 PrintWriter out = response.getWriter();
 		 String message = request.getParameter("message");
 		 out.println("<HTML><HEAD><TITLE>login</TITLE></HEAD>");
-		 out.println("<BODY><H1 ALIGN=\"CENTER\">Login Form</H1><FORM ACTION=\"/Fabflix/\" METHOD=\"POST\"><center> Username: <INPUT TYPE=\"TEXT\" NAME=\"Username\"><BR> Password: <INPUT TYPE=\"PASSWORD\" NAME=\"password\"><BR></center> <CENTER><INPUT TYPE=\"SUBMIT\" VALUE=\"Submit Order\">");
+		 out.println("<BODY><H1 ALIGN=\"CENTER\">Login Form</H1><FORM ACTION=\"/Fabflix/\" METHOD=\"POST\"><center> Username: <INPUT TYPE=\"TEXT\" NAME=\"Username\"><BR> Password: <INPUT TYPE=\"PASSWORD\" NAME=\"password\"><BR></center> <CENTER><INPUT TYPE=\"SUBMIT\" VALUE=\"Login\">");
 		 if(message !=null)out.println("<br>"+message+"</br>");
 		 out.println("</CENTER>");
 		 out.println("</FORM>");
