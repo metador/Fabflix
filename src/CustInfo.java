@@ -31,6 +31,7 @@ public class CustInfo extends HttpServlet {
     private static String User = null;
     private static String Pass = null;
     private static String Page = "/Fabflix/CustInfo";
+    headerFooter base = new headerFooter();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -111,41 +112,32 @@ public class CustInfo extends HttpServlet {
 		PreparedStatement ps_custinfo = (PreparedStatement) connection.prepareStatement(custinfo);
 		ResultSet customer = ps_custinfo.executeQuery();
 		
-		out.println("<HTML><style>"
-				+ "#container {"
-				+ "padding:10%"
-		 		+ "height:250px;"
-				+ "margin:20%;}"
-		 		+ "#details {"
-		 		+ "text-align:center;"
-		 		+ "padding:5px;"
-		 		+ "width:70%;"
-		 		+ "color:white;"
-		 		+ "background-color:black;"
-		 		+ "height:220px;"
-		 		+ "float:left;"
-		 		+ "}"
-		 		+ "</style>");
-		out.println("<HEAD><TITLE>Customer Info</TITLE></HEAD>");
-		out.println("<BODY><H1 ALIGN=\"CENTER\">Customer Details</H1></CENTER>");
+		out.println(base.header());
+		out.println("<HEAD><TITLE>Customer Details</TITLE></HEAD>");
+		out.println(base.banner());
 		
+		out.println("<form action='/Fabflix/Confirm' method='post'><div id=\"cust_info\">"
+				+ "<span style='font-size:35px'>My Info</span>"
+		+ "<button class='cart_btn' name='req' type='submit' value='Confirm' style='float:right;font-size:20px;'>"
+		+ "<img src='http://goo.gl/iCLKUa?gdriveurl' height='20' width='20'>Confirm</button><br><br>");
 		if(customer.next())
 		{
-			out.println("<div id=\"container\"><div id=\"details\">");
-			out.println("<form action=\"/Fabflix/Confirm\" method='post'><span class=\"title\">First Name = </span>");
-			out.println("<input type='text' name='fname' value=" + customer.getString("first_name") + "><br><br>");
-			out.println("<span class=\"title\">Last Name = </span>");
-			out.println("<input type='text' name='lname' value=" + customer.getString("last_name") + "><br><br>");
-			out.println("<span class=\"title\">Address Name = </span>");
-			out.println("<input type='text' name='add' value='" + customer.getString("address") + "'><br><br>");
-			out.println("<span class=\"title\">Email = </span>");
-			out.println("<input type='text' name='email' value=" + customer.getString("email") + "><br><br>");
-			out.println("<span class=\"title\">Credit Card = </span>");
-			out.println("<input type='text' name='ccid' value='" + customer.getString("cc_id") + "'><br><br>");
+			out.println("<div id=\"details\">");
+			out.println("<span style='padding-left:50px'>First Name : </span>");
+			out.println("<input id='cust_field' type='text' name='fname' value=" + customer.getString("first_name") + "><br><br>");
+			out.println("<span style='padding-left:50px'>Last Name : </span>");
+			out.println("<input id='cust_field' type='text' name='lname' value=" + customer.getString("last_name") + "><br><br>");
+			out.println("<span style='padding-left:50px'>Address : </span>");
+			out.println("<input id='cust_field' type='text' name='add' value='" + customer.getString("address") + "'><br><br>");
+			out.println("<span style='padding-left:50px'>Email : </span>");
+			out.println("<input id='cust_field' type='text' name='email' value=" + customer.getString("email") + "><br><br>");
+			out.println("<span style='padding-left:50px'>Credit Card Number : </span>");
+			out.println("<input id='cust_field' type='text' name='ccid' value='" + customer.getString("cc_id") + "'><br><br>");
 			out.println("<input type='hidden' name='password' value='" + customer.getString("password") + "'>");
-			out.println("<input type=\"submit\" value='Confirm Details' style=\"padding:10px;background-color:blue;color:white;\"></form></div></div>");
+			out.println("</div></div></form>");
 		}
-		out.println("</BODY></HTML>");
+		out.println("<br><br><br><br><br><br>");
+		out.println(base.footer());
 	    	
 	}
 
