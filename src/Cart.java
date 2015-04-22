@@ -97,20 +97,20 @@ public class Cart extends HttpServlet {
 			response.sendRedirect("/Fabflix/index.html");
 		
 		int movie_id = Integer.parseInt(request.getParameter("MovieID"));
+		String req = request.getParameter("req");
+		if (req.equals("Clear"))
+		{
+			out.println("<HTML>In Clear");
+			String removeAll = "DELETE from `moviedb`.`cart` where `customer_id` = '" + customer_id + "';";
+			PreparedStatement ps_cart_removeAll = (PreparedStatement) connection.prepareStatement(removeAll);
+			ps_cart_removeAll.executeUpdate();
+		}
 		if (movie_id != 0)
 		{
 			String movie_check = "Select * from cart where movie_id = '" + movie_id + "' and customer_id = '" + customer_id + "';";
 			PreparedStatement ps_cart_check = (PreparedStatement) connection.prepareStatement(movie_check);
 			ResultSet cart_check = ps_cart_check.executeQuery();
 			
-			String req = request.getParameter("req");
-			if (req.equals("Clear"))
-			{
-				out.println("<HTML>In Clear");
-				String removeAll = "DELETE from `moviedb`.`cart` where `customer_id` = '" + customer_id + "';";
-				PreparedStatement ps_cart_removeAll = (PreparedStatement) connection.prepareStatement(removeAll);
-				ps_cart_removeAll.executeUpdate();
-			}
 			if (cart_check.next() && !req.equals("Delete") && !req.equals("View") && !req.equals("Clear"))
 			{
 				out.println("<HTML>In cart_check.next()");

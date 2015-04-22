@@ -28,6 +28,7 @@ public class Star extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DataSource dataSource;
     private Connection connection;
+	headerFooter base = new headerFooter();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -72,44 +73,50 @@ public class Star extends HttpServlet {
 		ResultSet star = ps_star.executeQuery();
 		PrintWriter out = response.getWriter();
 		
+		out.println(base.header());
+		out.println("<HEAD><TITLE>Star Info</TITLE></HEAD>");
+		out.println(base.banner());
+		
 		String message = request.getParameter("message");
-		out.println("<HTML><HEAD><TITLE>login</TITLE></HEAD>");
-		 out.println("<BODY><H1 ALIGN=\"CENTER\">Star Details</H1></CENTER>");
-		 out.println("<a href=\"javascript:history.go(-1)\">Go back to previous page</a>");
-		 out.println("<style>"
-				+ "#container {"
-				+ "padding:10%"
-		 		+ "height:250px;"
-				+ "margin:20%;}"
-		 		+ "#details {"
-		 		+ "text-align:left;"
-		 		+ "padding:5px;"
-		 		+ "width:60%;"
-		 		+ "color:white;"
-		 		+ "background-color:black;"
-		 		+ "height:220px;"
-		 		+ "float:right;"
-		 		+ "}"
-		 		+ "#image {"
-		 		+ "width:35%;"
-		 		+ "float:left;"
-		 		+ "background-color:black;"
-		 		+ "height:220px;"
-		 		+ "padding:5px;"
-		 		+ "}"
-		 		+ "</style>");
 		if (star.next())
 		{
 			do
 			{
-				String movie_query = "Select distinct(a.title), a.year from movies a "
+				String movie_query = "Select distinct(a.title), a.year, a.id from movies a "
 						+ "where a.id in (select distinct(b.movie_id) from stars_in_movies b "
 						+ "where b.star_id in (select distinct(c.id)  from stars c where "
 						+ "c.first_name = '" + star.getString("first_name") + "' and c.last_name = '" + star.getString("last_name") + "'));";
 				PreparedStatement ps_movies = (PreparedStatement) connection.prepareStatement(movie_query);
 				ResultSet movies = ps_movies.executeQuery();
 				
-				out.println("<div id=\"container\"><div id=\"image\">");
+				
+				
+				out.println("<tr><td><br><br>" + 
+						"<div>" + 
+						"<table  id='movie_search' style='margin-left:20%;margin-right:20%;'><tr><td width=\"20%;\"><div id=\"mov_list\">" + 
+						"<img  style=\"position:absolute;z-index:1;margin-top:30px;margin-left:75px;\" src=\"" + star.getString("photo_url") + "\"  alt=\"" + star.getString("first_name") + " " + star.getString("last_name") + "'s Profile Photo\" height='188' width='120'>" + 
+						"<img style=\"z-index:2;\" src=\"http://gateway.hopto.org:9000/fabflix/images/short-case.png\" height='250' width='255'></div></td>" + 
+						"<td width=\"40%;\"><div id=\"mov_det\">" + 
+						"<span style=\"font-weight: bold;\">Actor : " + star.getString("first_name") + " " + star.getString("last_name") + "</span><br>" +
+						"<br><span>Date of Birth : " + star.getString("dob") + "</span><br>"
+						+ "<br><div style=\"float:left;width:20%;\"><span style=\"font-style: italic;\">Starred In : </span></div><div style=\"float:right;width:80%;\"><span>");
+				String movie = "Dummy Name";
+				while (movies.next())
+				{
+					if (!movie.equals(movies.getString("title") + movies.getString("year")))
+						out.println("<a class=\"ag_links\" href=\"/Fabflix/Movie?MovieID=" + movies.getString("id") + "\">"
+							+ movies.getString("title") + " (" + movies.getString("year") + ")" + "</a>");
+					movie = movies.getString("title") + movies.getString("year");
+				} 
+	         out.println("</span></div></div></td></tr></table>" + 
+						"</div>" + 
+						"<br></td></tr>"); 
+				
+				
+				
+
+				
+				/*out.println("<div id=\"container\"><div id=\"image\">");
 				out.println("<img style=\"width:110;height;160;\"src=\"" + star.getString("photo_url")
 						+ "\" alt=\"" + star.getString("first_name") + " " + star.getString("last_name") + " Photo\"></div>");
 				out.println("<div id=\"details\"><span class=\"title\">Star Name = " + star.getString("first_name") + " " + star.getString("last_name")  + "</span><br>");
@@ -121,7 +128,7 @@ public class Star extends HttpServlet {
 					movie_list += (movies.getString(1) + " " + movies.getString(2) + "<br>");
 				}
 				movie_list = movie_list.substring(0, movie_list.length()-4);
-				out.println(movie_list + "</span><br>");
+				out.println(movie_list + "</span><br>");*/
 			} while (star.next());
 		}
 		else
@@ -130,7 +137,8 @@ public class Star extends HttpServlet {
 			response.sendRedirect("/Fabflix/index.html?message="+mess);  
 			out.println("<tr>" + "<td>" + message+ "</td>" +"</tr>");
 		}
-		out.println("</BODY></HTML>");
+		
+		out.println("<br><br><br>" + base.footer());
 	}
 	
 

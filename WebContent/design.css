@@ -217,6 +217,10 @@
    margin-bottom:20px;
    margin-left:10%;
    margin-right:10%;
+    border-radius: 8px 8px 8px 8px;
+    border-style: solid;
+    border-width: 3px;
+    border-color:#00CCFF;
 }
 .ag_links
 {
@@ -358,4 +362,23 @@
 }
 .login_btn:hover{
    background-color:#00CC00;
+}
+.cart_movie
+{
+   background-color:#00CC00;
+   border-radius: 4px 4px 4px 4px;
+    border-style: solid;
+    border-width: 3px;
+    border-color:#00CC00;
+   font-size:18px;
+   text-decoration: none;
+   color:white;
+   width:60%;
+}
+.cart_movie:hover{
+   background-color:#0099FF;
+    border-radius: 4px 4px 4px 4px;
+    border-style: solid;
+    border-width: 3px;
+    border-color:#0099FF;
 }

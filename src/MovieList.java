@@ -197,20 +197,20 @@ public class MovieList extends HttpServlet {
 				+ "</div><br></td></tr>");
 		if (movies.next())
 		{
-			while (movies.next());
-				size++;
-			movies.first();
-	     	do
+	     	String movie = "Dummy Movie";
+			do
 			{
+				if (!movie.equals(movies.getString("title") + movies.getString("year")))
+				{
 				String star_query = "Select distinct(a.first_name), a.last_name, a.id from stars a "
 						+ "where a.id in (select distinct(b.star_id) from stars_in_movies b "
-						+ "where b.movie_id in (select distinct(c.id)  from movies c where c.title = '" + movies.getString("title").replace("'", "''") +"'));";
+						+ "where b.movie_id in (select distinct(c.id)  from movies c where c.title = '" + movies.getString("title").replace("'", "''") +"')) order by a.first_name;";
 				PreparedStatement ps_stars = (PreparedStatement) connection.prepareStatement(star_query);
 				ResultSet stars = ps_stars.executeQuery();
 				
 				String genre_query = "Select distinct(a.name) from genres a "
 						+ "where a.id in (select distinct(b.genre_id) from genres_in_movies b where b.movie_id in "
-						+ "(select distinct(c.id)  from movies c where c.title = '" + movies.getString("title").replace("'", "''") +"'));";
+						+ "(select distinct(c.id)  from movies c where c.title = '" + movies.getString("title").replace("'", "''") +"')) order by a.name;";
 				PreparedStatement ps_genres = (PreparedStatement) connection.prepareStatement(genre_query);
 				ResultSet genres = ps_genres.executeQuery();
 				
@@ -225,15 +225,8 @@ public class MovieList extends HttpServlet {
 						"<div style=\"float:left;width:10%;\"><span style=\"font-weight: bold;\">Movie: </span></div>"
 						+ "<div style=\"float:right;width:90%;\"><a class=\"ag_links\" style=\"font-size:18px;\" href=\"/Fabflix/Movie?MovieID=" + movies.getString("id") + "\">" + movies.getString("title") + "</a></div><br>" + 
 						"<br><span>Year: " + movies.getString("year") + "</span><br>" + 
-						"<br><span>Director: " + movies.getString("director") + "</span><br>" + 
-						"<br><div style=\"float:left;width:10%;\"><span style=\"font-style: italic;\">Actors: </span></div><div style=\"float:right;width:90%;\"><span>");
-				while (stars.next())
-				{
-					out.println("<a class=\"ag_links\" href=\"/Fabflix/Star?StarID=" + stars.getString("id") + "\">"
-							+ stars.getString("first_name") + " " + stars.getString("last_name") + "</a>");
-
-				} 
-	         out.println("</span></div><br><br><span style=\"font-style: italic;\">Genre: ");
+						"<br><span>Director: " + movies.getString("director") + "</span><br>"); 
+				out.println("<br><span style=\"font-style: italic;\">Genre: ");
 				String genre_list = "";
 				while (genres.next())
 				{
@@ -241,20 +234,26 @@ public class MovieList extends HttpServlet {
 				}
 				genre_list = genre_list.substring(0, genre_list.length()-2);
 				out.println(genre_list + "</span><br><br>");
-	         
-	         
-	         
-	         out.println("<span>Price: [$12.45]</span><br></div></td></tr>" + 
-						"<tr><td class=\"cart\"><img style=\"float:left;padding-left:30%;\" src=\"http://goo.gl/xuA1xS?gdriveurl\" height=\"24\" width=\"24\">" + 
-						"<a class=\"links\" href='/Fabflix/Cart?MovieID=" + movies.getString("id") + "&qty=1&req=Add'\">&nbspAdd to My Cart</a></td>" + 
-						"<td class=\"cart\"><img style=\"float:left;padding-left:30%;\" src=\"http://goo.gl/rXhBkP?gdriveurl\" height=\"24\" width=\"24\">" + 
-						"<a class=\"links\" href='" + movies.getString("trailer_url") + "'\">&nbspWatch Trailer</a></td>" + 
+	         out.println("<span>Price: [$12.45]</span><br>"
+						+ "<br><div style=\"float:left;width:10%;\"><span style=\"font-style: italic;\">Actors: </span></div><div style=\"float:right;width:90%;\"><span>");
+				String star_name = "Dummy Name";
+				while (stars.next())
+				{
+					if (!star_name.equals(stars.getString("first_name") + stars.getString("last_name")))
+						out.println("<a class=\"ag_links\" href=\"/Fabflix/Star?StarID=" + stars.getString("id") + "\">"
+							+ stars.getString("first_name") + " " + stars.getString("last_name") + "</a>");
+					star_name = stars.getString("first_name") + stars.getString("last_name");
+				} 
+	         out.println("</span></div></div></td></tr>" + 
+						"<tr><td><center><div class='cart_movie'><img src=\"http://goo.gl/xuA1xS?gdriveurl\" height=\"20\" width=\"20\">" + 
+						"<a class=\"links\" href='/Fabflix/Cart?MovieID=" + movies.getString("id") + "&qty=1&req=Add'\">&nbspAdd to My Cart</a></div></center></td>" + 
+						"<td><center><div class='cart_movie' style='width:40%'><img src=\"http://goo.gl/rXhBkP?gdriveurl\" height=\"22\" width=\"22\">" + 
+						"<a class=\"links\" href='" + movies.getString("trailer_url") + "'\">&nbspWatch Trailer</a></div></center></td>" + 
 						"</tr></table>" + 
 						"</div>" + 
 						"<br></td></tr>"); 
-	         if (size > 1)
-	        	 out.println("<hr id=\"line\">");
-	         size--;
+				}
+				movie = movies.getString("title") + movies.getString("year");
 			} while (movies.next());
 			
 
