@@ -22,7 +22,6 @@ public class Main extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DataSource dataSource;
     private Connection connection;
-    
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -67,7 +66,7 @@ public class Main extends HttpServlet {
 		 		"<span >More Info: [$12.45]</span><br><br>" + 
 		 		"</div></td></tr>" + 
 		 		"<tr><td class=\"cart\"><img style=\"float:left;padding-left:30%;\"src=\"http://goo.gl/xuA1xS?gdriveurl\" height=\"24\" width=\"24\">" + 
-		 		"<a class=\"links\" href=\"www.google.com\">&nbspAdd to My Cart</a></td></tr></table></td>" + 
+		 		"<a class=\"links\" href='/Fabflix/Cart?MovieID=755010&qty=1&req=Add'>&nbspAdd to My Cart</a></td></tr></table></td>" + 
 		 		"<td style=\"border:none;\"><td style=\"border:none;\"><table  id=\"movie\"><tr><td><div id=\"mov_list\">" + 
 		 		"<img style=\"position:absolute;z-index:1;\"src=\"http://gateway.hopto.org:9000/fabflix/images/cache/230ba1a62ed6d0f7794c706854338a24.png\" height=\"250\" width=\"255\">" + 
 		 		"<img style=\"z-index:2;\"src=\"http://gateway.hopto.org:9000/fabflix/images/short-case.png\" height=\"250\" width=\"255\"></div>" + 
@@ -77,7 +76,7 @@ public class Main extends HttpServlet {
 		 		"<span>More Info: [$12.45]</span><br><br>" + 
 		 		"</div></td></tr>" + 
 		 		"<tr><td class=\"cart\"><img style=\"float:left;padding-left:30%;\"src=\"http://goo.gl/xuA1xS?gdriveurl\" height=\"24\" width=\"24\">" + 
-		 		"<a class=\"links\" href=\"www.google.com\">&nbspAdd to My Cart</a></td></tr></table></td>" + 
+		 		"<a class=\"links\" href='/Fabflix/Cart?MovieID=987653&qty=1&req=Add'>&nbspAdd to My Cart</a></td></tr></table></td>" + 
 		 		"<td style=\"border:none;\"><td style=\"border:none;\"><table  id=\"movie\"><tr><td><div id=\"mov_list\">" + 
 		 		"<img style=\"position:absolute;z-index:1;\"src=\"http://gateway.hopto.org:9000/fabflix/images/cache/f215749ea5ba33e28020fa67df74ccd4.png\" height=\"250\" width=\"255\">" + 
 		 		"<img style=\"z-index:2;\"src=\"http://gateway.hopto.org:9000/fabflix/images/short-case.png\" height=\"250\" width=\"255\"></div>" + 
@@ -87,7 +86,7 @@ public class Main extends HttpServlet {
 		 		"<span>More Info: [$12.45]</span><br><br>" + 
 		 		"</div></td></tr>" + 
 		 		"<tr><td class=\"cart\"><img style=\"float:left;padding-left:30%;\"src=\"http://goo.gl/xuA1xS?gdriveurl\" height=\"24\" width=\"24\">" + 
-		 		"<a class=\"links\" href=\"www.google.com\">&nbspAdd to My Cart</a></td></tr></table></td></tr>" + 
+		 		"<a class=\"links\" href='/Fabflix/Cart?MovieID=1326589&qty=1&req=Add'>&nbspAdd to My Cart</a></td></tr></table></td></tr>" + 
 		 		"</table>" + 
 		 		"</div>");
 	   try

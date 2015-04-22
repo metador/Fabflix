@@ -168,7 +168,7 @@ public class Cart extends HttpServlet {
 			int iter_form = 0;
 			do
 			{
-				out.println("<tr><td>" + cart.getString("title") + "</td>");
+				out.println("<tr style='color:brown;'><td>" + cart.getString("title") + "</td>");
 				out.println("<td>" + cart.getString("price") + "</td>");
 				out.println("<form id=\"form" + iter_form + "\"><td><input type='text' name='qty' value=" + cart.getString("quantity") + "></td>");
 				out.println("<td><button class=\"cart_btn\" name='req' type='submit' value='Update'>"
