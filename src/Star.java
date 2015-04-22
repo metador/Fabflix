@@ -88,9 +88,7 @@ public class Star extends HttpServlet {
 						+ "c.first_name = '" + star.getString("first_name") + "' and c.last_name = '" + star.getString("last_name") + "'));";
 				PreparedStatement ps_movies = (PreparedStatement) connection.prepareStatement(movie_query);
 				ResultSet movies = ps_movies.executeQuery();
-				
-				
-				
+
 				out.println("<tr><td><br><br>" + 
 						"<div>" + 
 						"<table  id='movie_search' style='margin-left:20%;margin-right:20%;'><tr><td width=\"20%;\"><div id=\"mov_list\">" + 
@@ -112,23 +110,6 @@ public class Star extends HttpServlet {
 						"</div>" + 
 						"<br></td></tr>"); 
 				
-				
-				
-
-				
-				/*out.println("<div id=\"container\"><div id=\"image\">");
-				out.println("<img style=\"width:110;height;160;\"src=\"" + star.getString("photo_url")
-						+ "\" alt=\"" + star.getString("first_name") + " " + star.getString("last_name") + " Photo\"></div>");
-				out.println("<div id=\"details\"><span class=\"title\">Star Name = " + star.getString("first_name") + " " + star.getString("last_name")  + "</span><br>");
-				out.println("<span class=\"title\">Date of Birth = " + star.getString("dob") + "</span><br>");
-				out.println("<span class=\"title\">Starred In = ");
-				String movie_list = "";
-				while (movies.next())
-				{
-					movie_list += (movies.getString(1) + " " + movies.getString(2) + "<br>");
-				}
-				movie_list = movie_list.substring(0, movie_list.length()-4);
-				out.println(movie_list + "</span><br>");*/
 			} while (star.next());
 		}
 		else

@@ -126,7 +126,7 @@ public class CustInfo extends HttpServlet {
 			out.println("<span style='padding-left:50px'>Last Name : </span>");
 			out.println("<input id='cust_field' type='text' name='lname' value=" + customer.getString("last_name") + "><br><br>");
 			out.println("<span style='padding-left:50px'>Address : </span>");
-			out.println("<input id='cust_field' type='text' name='add' value='" + customer.getString("address") + "'><br><br>");
+			out.println("<input id='cust_field' type='text' name='address' value=\"" + customer.getString("address") + "\"><br><br>");
 			out.println("<span style='padding-left:50px'>Email : </span>");
 			out.println("<input id='cust_field' type='text' name='email' value=" + customer.getString("email") + "><br><br>");
 			out.println("<span style='padding-left:50px'>Credit Card Number : </span>");

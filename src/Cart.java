@@ -100,7 +100,6 @@ public class Cart extends HttpServlet {
 		String req = request.getParameter("req");
 		if (req.equals("Clear"))
 		{
-			out.println("<HTML>In Clear");
 			String removeAll = "DELETE from `moviedb`.`cart` where `customer_id` = '" + customer_id + "';";
 			PreparedStatement ps_cart_removeAll = (PreparedStatement) connection.prepareStatement(removeAll);
 			ps_cart_removeAll.executeUpdate();
@@ -113,7 +112,6 @@ public class Cart extends HttpServlet {
 			
 			if (cart_check.next() && !req.equals("Delete") && !req.equals("View") && !req.equals("Clear"))
 			{
-				out.println("<HTML>In cart_check.next()");
 				int qty = Integer.parseInt(request.getParameter("qty"));
 				if (req.equals("Add"))
 					qty += Integer.parseInt(cart_check.getString("quantity"));
@@ -126,7 +124,6 @@ public class Cart extends HttpServlet {
 			{
 				if (req.equals("Add"))
 				{
-					out.println("<HTML>In rem_flag = false");
 					String movie = "Select * from movies where id = '" + movie_id + "';";
 					PreparedStatement ps_movie = (PreparedStatement) connection.prepareStatement(movie);
 					ResultSet movies = ps_movie.executeQuery();
@@ -138,7 +135,6 @@ public class Cart extends HttpServlet {
 				}
 				else if (req.equals("Delete"))
 				{
-					out.println("<HTML>In Delete");
 					String remove = "DELETE from `moviedb`.`cart` where `customer_id` = '" + customer_id + "' and `movie_id` = '" + movie_id + "';";
 					PreparedStatement ps_cart_remove = (PreparedStatement) connection.prepareStatement(remove);
 					ps_cart_remove.executeUpdate();
@@ -154,32 +150,40 @@ public class Cart extends HttpServlet {
 		out.println("<HEAD><TITLE>My Shopping Cart</TITLE></HEAD>");
 		out.println(base.banner());
 		
-		out.println("<div id=\"cart_title\"><span>My Shopping Cart</span>"
-				+ "<a class=\"cart\" style=\"margin-right:10px;font-size:20px;float:right;\" href=\"/Fabflix/Cart?MovieID=0&qty=0&req=Clear\">"
-				+ "<img src='http://goo.gl/XrNSZm?gdriveurl' height='24' width='24'>Empty Cart</a>"
-				+ "<a class=\"cart\" style=\"margin-right:10px;font-size:20px;float:right;\" href=\"/Fabflix/CustInfo\">"
-				+ "<img src='http://goo.gl/iCLKUa?gdriveurl' height='24' width='24'>Check Out</a></div>");
-		out.println("<table  cellpadding=\"10\" id=\"cart_res\"><tr style=\"background-color:#00CCFF;\" align=\"left\">"
-				+ "<th>Movie Title</th>"
-				+ "<th>Price</th>"
-				+ "<th>Quantity</th>"
-				+ "<th>Update</th>"
-				+ "<th>Remove</th></tr>");
-		
-		int iter_form = 0;
-		while(cart.next())
+		out.println("<div id=\"cart_title\"><span>My Shopping Cart</span>");
+
+		if (cart.next())
 		{
-			out.println("<tr><td>" + cart.getString("title") + "</td>");
-			out.println("<td>" + cart.getString("price") + "</td>");
-			out.println("<form id=\"form" + iter_form + "\"><td><input type='text' name='qty' value=" + cart.getString("quantity") + "></td>");
-			out.println("<td><button class=\"cart_btn\" name='req' type='submit' value='Update'>"
-					+ "<img src='http://goo.gl/STfkLN?gdriveurl' height='20' width='20'>Update</button></td>");
-			out.println("<td><button class=\"cart_btn\" name='req' type='submit' value='Delete'>"
-					+ "<img src='http://goo.gl/ULy6Mw?gdriveurl' height='20' width='20'>Delete</button></td>"
-					+ "<input type='hidden' name='MovieID' value='" + cart.getString("movie_id") + "'></form></tr>");
-			iter_form++;
+			out.println("<a class=\"cart\" style=\"margin-right:10px;font-size:20px;float:right;\" href=\"/Fabflix/Cart?MovieID=0&qty=0&req=Clear\">"
+			+ "<img src='http://goo.gl/XrNSZm?gdriveurl' height='24' width='24'>Empty Cart</a>"
+			+ "<a class=\"cart\" style=\"margin-right:10px;font-size:20px;float:right;\" href=\"/Fabflix/CustInfo\">"
+			+ "<img src='http://goo.gl/iCLKUa?gdriveurl' height='24' width='24'>Check Out</a></div>");
+		out.println("<table  cellpadding=\"10\" id=\"cart_res\"><tr style=\"background-color:#00CCFF;\" align=\"left\">"
+					+ "<th>Movie Title</th>"
+					+ "<th>Price</th>"
+					+ "<th>Quantity</th>"
+					+ "<th>Update</th>"
+					+ "<th>Remove</th></tr>");
+			
+			int iter_form = 0;
+			do
+			{
+				out.println("<tr><td>" + cart.getString("title") + "</td>");
+				out.println("<td>" + cart.getString("price") + "</td>");
+				out.println("<form id=\"form" + iter_form + "\"><td><input type='text' name='qty' value=" + cart.getString("quantity") + "></td>");
+				out.println("<td><button class=\"cart_btn\" name='req' type='submit' value='Update'>"
+						+ "<img src='http://goo.gl/STfkLN?gdriveurl' height='20' width='20'>Update</button></td>");
+				out.println("<td><button class=\"cart_btn\" name='req' type='submit' value='Delete'>"
+						+ "<img src='http://goo.gl/ULy6Mw?gdriveurl' height='20' width='20'>Delete</button></td>"
+						+ "<input type='hidden' name='MovieID' value='" + cart.getString("movie_id") + "'></form></tr>");
+				iter_form++;
+			} while(cart.next());
+			out.println("</table><br><br><br><br>");
 		}
-		out.println("</table><br><br><br><br>");
+		else
+			out.println("</div><div id='cart_title' style='border-radius: 0px 0px 0px 0px;'>"
+					+ "<center><span>Your Cart seems empty now. Why don't you shop for few movies?!</span>"
+					+ "</center></div><br><br><br><br>");
 		out.println(base.footer());
 	}
 
