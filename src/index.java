@@ -52,6 +52,7 @@ public class index extends HttpServlet {
 		 String message = request.getParameter("message");
 		 headerFooter base = new headerFooter();
 		 out.println(base.header());
+		 out.println(base.banner());
 			out.println("<HEAD><TITLE>Login Page</TITLE></HEAD>");
 			
 
@@ -93,7 +94,7 @@ public class index extends HttpServlet {
 				         session.setAttribute("User", username);
 				         session.setAttribute("Pass", password);
 				         String temp = "";
-				         session.setAttribute("Page", temp);
+				        temp=(String) session.getAttribute("Page");
 				         if (temp.isEmpty())
 				        	 Page = "/Fabflix/Main";
 				         else

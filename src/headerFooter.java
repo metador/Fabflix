@@ -42,10 +42,10 @@ public class headerFooter {
 	{
 		String footer = "<div id=\"footline\">" + 
 				"<div id=\"footlinks\"><a class=\"ft_links\" href=\"www.google.com\">Home</a>" + 
-				"<a class=\"ft_links\" href=\"www.google.com\">About Us</a>" + 
-				"<a class=\"ft_links\" href=\"www.google.com\">Regsiter an Account</a>" + 
-				"<a class=\"ft_links\" href=\"www.google.com\">Privacy Policy</a>" + 
-				"<a class=\"ft_links\" href=\"www.google.com\">Checkout</a></div><br>" + 
+				"<a class=\"ft_links\" href=\"Main\">About Us</a>" + 
+				"<a class=\"ft_links\" href=\"Main\">Regsiter an Account</a>" + 
+				"<a class=\"ft_links\" href=\"Main\">Privacy Policy</a>" + 
+				"<a class=\"ft_links\" href=\"Main\">Checkout</a></div><br>" + 
 				"<div id=\"footlinks\"><p>Copyright © 2009 by Mohammed & Melwin James. All rights reserved (R).</p></div>" + 
 				"</div>" + 
 				"</body>" + 

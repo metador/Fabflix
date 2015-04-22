@@ -26,7 +26,7 @@ import javax.sql.DataSource;
 @WebServlet("/Cart")
 public class Cart extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private static String User = null;
+    private static String User = "";
     private static String Pass = null;
     private static String Page = "/Fabflix/Cart";
 	private DataSource dataSource;
@@ -73,7 +73,10 @@ public class Cart extends HttpServlet {
 	    {
 	         User = (String) session.getAttribute("User");
 	         Pass = (String) session.getAttribute("Pass");
+	         Page=request.getRequestURI()+"?"+request.getQueryString();
 	         session.setAttribute("Page", Page);
+	         if (User == null)
+	             response.sendRedirect("/Fabflix/index.html");
         }
 	    try {
 			print(response, request);
@@ -94,7 +97,8 @@ public class Cart extends HttpServlet {
 		if (id.next())
 			customer_id = Integer.parseInt(id.getString("id"));
 		else
-			response.sendRedirect("/Fabflix/index.html");
+		{	//response.sendRedirect("/Fabflix/index.html");
+		}
 		
 		int movie_id = Integer.parseInt(request.getParameter("MovieID"));
 		String req = request.getParameter("req");

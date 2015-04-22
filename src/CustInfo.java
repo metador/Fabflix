@@ -30,7 +30,7 @@ public class CustInfo extends HttpServlet {
     private Connection connection;
     private static String User = null;
     private static String Pass = null;
-    private static String Page = "/Fabflix/CustInfo";
+    private static String Page = "";
     headerFooter base = new headerFooter();
     /**
      * @see HttpServlet#HttpServlet()
@@ -81,20 +81,22 @@ public class CustInfo extends HttpServlet {
 			e.printStackTrace();
 		}
 		HttpSession session = request.getSession();
-	    synchronized(session) 
-	    {
-	         User = (String) session.getAttribute("User");
-	         Pass = (String) session.getAttribute("Pass");
-	         session.setAttribute("Page", Page);
-        }
-        if (User.isEmpty() || Pass.isEmpty())
-       	 response.sendRedirect("/Fabflix/index.html");
-        
-	    try {
-			print(response, request);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		
+		 synchronized(session) 
+		    {
+		         User = (String) session.getAttribute("User");
+		         Pass = (String) session.getAttribute("Pass");
+		         Page=request.getRequestURI();
+		         session.setAttribute("Page", Page);
+		         if (User == null || Pass == null)
+		             response.sendRedirect("/Fabflix/index.html");
+	        }
+		    try {
+				print(response, request);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 		
         

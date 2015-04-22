@@ -63,7 +63,7 @@ public class Main extends HttpServlet {
 		 		"<div align=\"center\" id=\"mov_det\">" + 
 		 		"<span style=\"font-weight: bold;\">Terminator 2: Judgment Day (1991)</span><br>" + 
 		 		"<span style=\"font-style: italic;\">Director: James Cameron</span><br>" + 
-		 		"<span >More Info: [$12.45]</span><br><br>" + 
+		 		"<span ><a href=\"/Fabflix/Movie?MovieID=755010\">More Info<a>: [$12.45]</span><br><br>" + 
 		 		"</div></td></tr>" + 
 		 		"<tr><td class=\"cart\"><img style=\"float:left;padding-left:30%;\"src=\"http://goo.gl/xuA1xS?gdriveurl\" height=\"24\" width=\"24\">" + 
 		 		"<a class=\"links\" href='/Fabflix/Cart?MovieID=755010&qty=1&req=Add'>&nbspAdd to My Cart</a></td></tr></table></td>" + 
@@ -73,7 +73,7 @@ public class Main extends HttpServlet {
 		 		"<div align=\"center\" id=\"mov_det\">" + 
 		 		"<span style=\"font-weight: bold;\">This Is It (2009)</span><br>" + 
 		 		"<span style=\"font-style: italic;\">Director: Kenny Ortega</span><br>" + 
-		 		"<span>More Info: [$12.45]</span><br><br>" + 
+		 		"<span><a href=\"/Fabflix/Movie?MovieID=987653\">More Info<a> [$12.45]</span><br><br>" + 
 		 		"</div></td></tr>" + 
 		 		"<tr><td class=\"cart\"><img style=\"float:left;padding-left:30%;\"src=\"http://goo.gl/xuA1xS?gdriveurl\" height=\"24\" width=\"24\">" + 
 		 		"<a class=\"links\" href='/Fabflix/Cart?MovieID=987653&qty=1&req=Add'>&nbspAdd to My Cart</a></td></tr></table></td>" + 
@@ -83,7 +83,7 @@ public class Main extends HttpServlet {
 		 		"<div align=\"center\" id=\"mov_det\">" + 
 		 		"<span style=\"font-weight: bold;\">Avatar (2009)</span><br>" + 
 		 		"<span style=\"font-style: italic;\">Director: James Cameron</span><br>" + 
-		 		"<span>More Info: [$12.45]</span><br><br>" + 
+		 		"<span><a href=\"/Fabflix/Movie?MovieID=1326589\">More Info<a> [$12.45]</span><br><br>" + 
 		 		"</div></td></tr>" + 
 		 		"<tr><td class=\"cart\"><img style=\"float:left;padding-left:30%;\"src=\"http://goo.gl/xuA1xS?gdriveurl\" height=\"24\" width=\"24\">" + 
 		 		"<a class=\"links\" href='/Fabflix/Cart?MovieID=1326589&qty=1&req=Add'>&nbspAdd to My Cart</a></td></tr></table></td></tr>" + 

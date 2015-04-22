@@ -67,15 +67,17 @@ public class Confirm extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		HttpSession session = request.getSession();
+HttpSession session = request.getSession();
+		
 	    synchronized(session) 
 	    {
 	         User = (String) session.getAttribute("User");
 	         Pass = (String) session.getAttribute("Pass");
+	         Page="/Fabflix/Main";
 	         session.setAttribute("Page", Page);
+	         if (User == null || Pass == null)
+	             response.sendRedirect("/Fabflix/index.html");
         }
-        if (User.isEmpty() || Pass.isEmpty())
-       	 response.sendRedirect("/Fabflix/index.html");
 	    try {
 			print(response, request);
 		} catch (SQLException e) {
@@ -83,7 +85,6 @@ public class Confirm extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
