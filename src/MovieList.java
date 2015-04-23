@@ -163,22 +163,34 @@ public class MovieList extends HttpServlet {
 			int i=page_id-2;
 			if(i<=0)i=1;
 			int displayed_count=0;
-			out.println("<tr style=\"background-color:#00CCFF;\"><td align=\"center\">");
-			for(;i<=page_id+3;i++) // for pagenation
-				if(displayed_count<=count)
-				{
-					displayed_count=displayed_count+ipp;
-				out.println("<a style=\"float:left\" class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(i)+"&ipp="+ipp+"&order="+ordered_state+" >"+i+"</a>");
-				}
-			out.println("<span style=\"float:left;color:white;margin-top:10px;font-weight: bold;\">&nbsp&nbsp&nbsp<--Page Number</span>");
-			if(page_id*ipp+1<=count)
-			out.println("<a style=\"float:left\" class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(page_id+1)+"&ipp="+ipp+"&order="+ordered_state+" >Next page</a>");
-			if(page_id-1>=1)
-			out.println("<a style=\"float:left\" class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(page_id-1)+"&ipp="+ipp+"&order="+ordered_state+" >Previous page</a>");
+			out.println("<tr style=background-color:#00CCFF;padding:5px;'><td align=\"center\">");
+			movies.first();
+			if (movies.next())
+			{
+				for(;i<=page_id+3;i++) // for pagenation
+					if(displayed_count<=count)
+					{
+						displayed_count=displayed_count+ipp;
+						if (i == page_id)
+							out.println("<a class='ft_links' style='float:left;background-color:#00CC00;' href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(i)+"&ipp="+ipp+"&order="+ordered_state+" >"+i+"</a>");
+						else
+							out.println("<a class='ft_links' style='float:left;' href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(i)+"&ipp="+ipp+"&order="+ordered_state+" >"+i+"</a>");
+					}
+				out.println("<span style=\"float:left;color:white;margin-top:10px;font-weight: bold;\">&nbsp&nbsp&nbsp<--Page Number</span>");
+				if(page_id-1>=1)
+					out.println("<a class='ft_links' style='margin-top:10px;' href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(page_id-1)+"&ipp="+ipp+"&order="+ordered_state+" >Previous page</a>");
+				if(page_id*ipp+1<=count)
+					out.println("<a class='ft_links' style='margin-top:10px;' href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(page_id+1)+"&ipp="+ipp+"&order="+ordered_state+" >Next page</a>");
 
-			for(int j=5;j<=25;j=j+5)  // to set movies per page
-				out.println("<a style=\"float:right\" class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+j+"&order="+ordered_state+">"+j+"</a>");	
-			out.println("<span style=\"float:right;color:white;margin-top:10px;font-weight: bold;\">Items per page-->&nbsp&nbsp&nbsp</span>");
+				for(int j=5;j<=25;j=j+5)  // to set movies per page
+				{
+					if (j == ipp)
+						out.println("<a class='ft_links' style='float:right;background-color:#00CC00;' href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+j+"&order="+ordered_state+">"+j+"</a>");	
+					else
+						out.println("<a class='ft_links' style='float:right;' href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+j+"&order="+ordered_state+">"+j+"</a>");
+				}
+				out.println("<span style=\"float:right;color:white;margin-top:10px;font-weight: bold;\">Items per page-->&nbsp&nbsp&nbsp</span>");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -189,24 +201,23 @@ public class MovieList extends HttpServlet {
 
 	public void print(ResultSet result, HttpServletResponse response, HttpServletRequest request) throws SQLException, IOException
 	{
-		//connection = (Connection) dataSource.getConnection();
-		//String query = "Select * from movies where title like 'I%'";
-		//PreparedStatement ps_movies = (PreparedStatement) connection.prepareStatement(query);
 		ResultSet movies = result;
 		PrintWriter out = response.getWriter();
-		int size = 0;
-
-		out.println("<table id=\"srch_res\"><tr style=\"background-color:#00CCFF;\"><th>");
-		out.println("<h2 style=\"margin-left:10%;\">Search Results:</h2></th></tr>"
-				+ "<tr style=\"background-color:#00CCFF;\"><td align=\"center\" >");
-		out.println("<div align\"center\"><a class=\"sort_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=t_asc>"
-				+ "<img src=\"http://goo.gl/QklvbJ?gdriveurl\" height='34' width='34'>Title</a>");
-		out.println("<a class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=t_desc >Title</a>");
-		out.println("<a class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=d_asc >Year-> Asec</a>");
-		out.println("<a class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=d_desc >Year-> Dsec</a>"
-				+ "</div><br></td></tr>");
 		if (movies.next())
 		{
+			out.println("<table id=\"srch_res\"><tr style=\"background-color:#00CCFF;\"><th>");
+			out.println("<h2 style=\"margin-left:10%;\">Search Results:</h2></th></tr>"
+					+ "<tr style=\"background-color:#00CCFF;\"><td align=\"center\" >");
+			out.println("<div align='center'><a class='sort_links' href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=t_asc>"
+					+ "<img src=\"http://goo.gl/QklvbJ?gdriveurl\" height='24' width='24'>Title</a>");
+			out.println("<a class='sort_links' href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=t_desc>"
+					+ "<img src=\"http://goo.gl/MD348b?gdriveurl\" height='24' width='24'>Title</a>");
+			out.println("<a class='sort_links' href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=d_asc>"
+					+ "<img src=\"http://goo.gl/QklvbJ?gdriveurl\" height='24' width='24'>Year</a>");
+			out.println("<a class='sort_links' href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=d_desc>"
+					+ "<img src=\"http://goo.gl/MD348b?gdriveurl\" height='24' width='24'>Year</a>"
+					+ "</div><br></td></tr>");
+		
 	     	String movie = "Dummy Movie";
 			do
 			{
@@ -270,8 +281,9 @@ public class MovieList extends HttpServlet {
 		}
 		else
 		{
-			//String mess="Username or password incorrect";
-			//response.sendRedirect("/Fabflix/index.html?message="+mess);
+			out.println("</div><div id='cart_title' style='border-radius: 0px 0px 0px 0px;'>"
+					+ "<center><span>Sorry! No Results Found. Please Search again!</span>"
+					+ "</center></div><br><br><br><br>");
 		}
 	}
 	

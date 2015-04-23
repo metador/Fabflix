@@ -50,7 +50,10 @@ public class index extends HttpServlet {
 		// TODO Auto-generated method stub
 		 PrintWriter out = response.getWriter();
 		 String message = request.getParameter("message");
-		 request.getSession().setAttribute("Dummy", User);
+		 if (message != null)
+			 request.getSession().setAttribute("User", null);
+		 else
+			 request.getSession().setAttribute("User", User);
 		 headerFooter base = new headerFooter(request.getSession());
 		 out.println(base.header());
 		 out.println(base.banner());
@@ -66,24 +69,21 @@ public class index extends HttpServlet {
 			+ "<img src='http://goo.gl/wwTkAq?gdriveurl' height='24' width='24'>Confirm</button></center></div></div>");
 
 		 if(message !=null)
-			 out.println("<br>"+message+"</br>");
-		
-		response.setContentType("text/html");    // Response mime type
+			 out.println("<br><div><center><span style=\"color:red;fonts-size:50px;font-weight:bold;\">" + message + "</span></center></div>");
 		
 		    // Output stream to STDOUT
 		   try
 		   {
 			connection = (Connection) dataSource.getConnection();
 			Statement statement = connection.createStatement();
-			String username=request.getParameter("Username");
-			String password=request.getParameter("password");
-			if(username !=null && password !=null)
+			User =request.getParameter("Username");
+			Pass =request.getParameter("password");
+			if(User !=null && Pass !=null)
 			{
-				String query = "SELECT * from customers where first_name='"+username+"' AND password='"+ password+"';";
+				String query = "SELECT * from customers where first_name='"+ User +"' AND password='"+ Pass +"';";
 		
 				// Perform the query
 				 ResultSet rs = statement.executeQuery(query);
-				 out.println("<TABLE border>");
 		
 		          // Iterate through each row of rs
 		      //    if(message !=null)
@@ -92,32 +92,33 @@ public class index extends HttpServlet {
 					HttpSession session = request.getSession();
 				    synchronized(session) 
 				    {
-				         session.setAttribute("User", username);
-				         session.setAttribute("Pass", password);
+				         session.setAttribute("User", User);
+				         session.setAttribute("Pass", Pass);
 				         String temp = "";
-				        temp=(String) session.getAttribute("Page");
+				         temp=(String) session.getAttribute("Page");
 				         if (temp.isEmpty())
 				        	 Page = "/Fabflix/Main";
 				         else
-				        	 Page = temp;
+				         {
+				        	 if (request.getQueryString() == null)
+				        		 Page=request.getRequestURI();
+				        	 else
+				        		 Page=request.getRequestURI()+"?"+request.getQueryString();
+				         }
+				         
 				    }	
-				    
-				    String mess = "Succesfully logged in";			
+				    if (Page.equals("/Fabflix/index.html") || Page.equals("/Fabflix/index.html?message=Username%20or%20password%20incorrect.%20Please%20try%20Again!"))
+				    	Page = "/Fabflix/Main";
 					 response.sendRedirect(Page);
 					 
 				 }else{
-				String mess="Username or password incorrect";
-		 response.sendRedirect("/Fabflix/index.html?message="+mess);  
-		 out.println("<tr><center>" + "<td>" + message+ "</td></center>" +"</tr>");
+				String mess="Username or password incorrect. Please try Again!";
+		        response.sendRedirect("/Fabflix/index.html?message="+mess);  
 		          }
-		
-		          out.println("</TABLE>");
-		
 		          rs.close();
 		          statement.close();
 		          connection.close();
 		        }
-		          out.println("</TABLE>");
 		   }
 						        catch (SQLException ex) {
 						              while (ex != null) {
@@ -132,7 +133,7 @@ public class index extends HttpServlet {
 		                        "<HEAD><TITLE>" +
 		                        "MovieDB: Error" +
 		                        "</TITLE></HEAD>\n<BODY>" +
-		                        "<P>SQL error in doGet: " +
+		                        "<P>Java Lang Exception in doGet: " +
 		                        ex.getMessage() + "</P></BODY></HTML>");
 						                return;
 						            }

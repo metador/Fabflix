@@ -4,12 +4,12 @@ import javax.servlet.http.HttpSession;
 public class headerFooter {
 	
 	public boolean loggedin = false;
-	String User = "Dummy";
+	String User = null;
 	
 	public headerFooter(HttpSession session)
 	{
 		User = (String) session.getAttribute("User");
-		if (!(User == "Dummy") || (User == null))
+		if (!(User == null))
 			loggedin = true;
 	}
 	

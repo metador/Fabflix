@@ -96,7 +96,7 @@ public class Main extends HttpServlet {
 		  
 	   String genre_query="Select distinct name,id from moviedb.genres join genres_in_movies on genres_in_movies.genre_id=moviedb.genres.id order by name asc";
 	   ResultSet rs = statement.executeQuery(genre_query);
-	   out.println("<br><br><br><br><br><br>\r\n" + 
+	   out.println("<br><br><br>\r\n" + 
 	   		"<hr id=\"line\">" + 
 	   		"<div>" + 
 	   		"<h2 style=\"margin-left:10%;\">Guided Search:</h4>"
@@ -149,7 +149,7 @@ public class Main extends HttpServlet {
 	   out.println("<a class=\"title_srch\" href=/Fabflix/MovieList?by=title&arg=9>9</a>");
 	   out.println("<a class=\"title_srch\" href=/Fabflix/MovieList?by=title&arg=0>0</a>");
 	   out.println("</div></div>");
-	   out.println("<BR>");
+	   out.println("<BR><br><br><br>");
 	   }
 		  catch (SQLException ex) {
               while (ex != null) {
