@@ -31,7 +31,6 @@ public class Cart extends HttpServlet {
     private static String Page = "/Fabflix/Cart";
 	private DataSource dataSource;
     private Connection connection;
-    headerFooter base = new headerFooter();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -90,6 +89,7 @@ public class Cart extends HttpServlet {
 	{
 		connection = (Connection) dataSource.getConnection();
 		PrintWriter out = response.getWriter();
+	    headerFooter base = new headerFooter(request.getSession());
 		String custid = "Select id from customers where first_name = '" + User + "' and password = '" + Pass + "';";
 		PreparedStatement ps_custid = (PreparedStatement) connection.prepareStatement(custid);
 		ResultSet id = ps_custid.executeQuery();

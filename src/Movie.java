@@ -20,7 +20,6 @@ public class Movie extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DataSource dataSource;
     private Connection connection;
-	headerFooter base = new headerFooter();
     /**
      * @param connection 
      * @see HttpServlet#HttpServlet()
@@ -54,6 +53,7 @@ public class Movie extends HttpServlet {
 	public void print(String title, HttpServletResponse response, HttpServletRequest request) throws SQLException, IOException
 	{
 		connection = (Connection) dataSource.getConnection();
+	    headerFooter base = new headerFooter(request.getSession());
 		int movie_id = Integer.parseInt(request.getParameter("MovieID"));
 		String query = "Select * from movies where id like '" + movie_id + "'";
 		PreparedStatement ps_movies = (PreparedStatement) connection.prepareStatement(query);

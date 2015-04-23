@@ -50,7 +50,8 @@ public class index extends HttpServlet {
 		// TODO Auto-generated method stub
 		 PrintWriter out = response.getWriter();
 		 String message = request.getParameter("message");
-		 headerFooter base = new headerFooter();
+		 request.getSession().setAttribute("Dummy", User);
+		 headerFooter base = new headerFooter(request.getSession());
 		 out.println(base.header());
 		 out.println(base.banner());
 			out.println("<HEAD><TITLE>Login Page</TITLE></HEAD>");

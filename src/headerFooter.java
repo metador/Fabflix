@@ -1,5 +1,17 @@
+import javax.servlet.http.HttpSession;
+
 
 public class headerFooter {
+	
+	public boolean loggedin = false;
+	String User = "Dummy";
+	
+	public headerFooter(HttpSession session)
+	{
+		User = (String) session.getAttribute("User");
+		if (!(User == "Dummy") || (User == null))
+			loggedin = true;
+	}
 	
 	public String header()
 	{
@@ -18,10 +30,12 @@ public class headerFooter {
 	{
 		String banner = "<body id=\"set_font\" bgcolor=\"#EFFFFF\"><div id=\"banner\">" + 
 				"<div>" + 
-
-				"<button class=\"home\" onclick=\"location.href='/Fabflix/Cart?MovieID=0&qty=0&req=View'\"><img style=\"float:left;\"src=\"http://goo.gl/xuA1xS?gdriveurl\" height=\"34\" width=\"34\">My Cart</button>" + 
-				"<button class=\"home\" onclick=\"location.href='/Fabflix/index.html'\"><img style=\"float:left;\"src=\"http://goo.gl/wwTkAq?gdriveurl\" height=\"34\" width=\"34\">Sign In</button>" + 
-				"<button class=\"home\" onclick=\"location.href='/Fabflix/advSearch'\"><img style=\"float:left;\"src=\"http://goo.gl/sAojdW?gdriveurl\" height=\"34\" width=\"34\">Advanced Search</button>" + 
+				"<button class=\"home\" onclick=\"location.href='/Fabflix/Cart?MovieID=0&qty=0&req=View'\"><img style=\"float:left;\"src=\"http://goo.gl/xuA1xS?gdriveurl\" height=\"34\" width=\"34\">My Cart</button>"; 
+				if (loggedin)
+					banner += "<button class=\"home\" onclick=\"location.href='/Fabflix/index.html'\"><img style=\"float:left;\"src=\"http://goo.gl/wwTkAq?gdriveurl\" height=\"34\" width=\"34\">Sign Out</button>"; 
+				else
+					banner += "<button class=\"home\" onclick=\"location.href='/Fabflix/index.html'\"><img style=\"float:left;\"src=\"http://goo.gl/wwTkAq?gdriveurl\" height=\"34\" width=\"34\">Sign In</button>"; 
+				banner += "<button class=\"home\" onclick=\"location.href='/Fabflix/advSearch'\"><img style=\"float:left;\"src=\"http://goo.gl/sAojdW?gdriveurl\" height=\"34\" width=\"34\">Advanced Search</button>" + 
 				"<button class=\"home\" onclick=\"location='/Fabflix/Main'\"><img style=\"float:left;\"src=\"http://goo.gl/RdfXu3?gdriveurl\" height=\"34\" width=\"34\">&nbspHome</button>" + 
 
 				"<form action=/Fabflix/MovieList method='get'>" + 
@@ -31,9 +45,10 @@ public class headerFooter {
 				"<input type=\"hidden\" name=\"order\" value=\"t_asc\"/>" + 
 				"</form>" + 
 				"<img style=\"margin-right:20px;float:left;\" src=\"http://png-2.findicons.com/files/icons/768/precious_metal/512/movie.png\" height=\"72\" width=\"72\">" + 
-				"<span style=\"font-family: 'Pacifico', cursive;font-size:47px;padding:0;\">Fabflix</span></div>" + 
-				"</div>" + 
-				"<br><br>" + 
+				"<span style=\"font-family: 'Pacifico', cursive;font-size:47px;padding:0;\">Fabflix</span>"; 
+				if (loggedin)
+					banner += "<center><span style=\"font-family: 'Calibri', cursive;font-size:15px;margin-left:5px;\">Welcome " + User + "!</span></center>";
+				banner += "</div></div><br><br>" + 
 				"";
 		return banner;
 	}

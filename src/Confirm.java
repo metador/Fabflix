@@ -33,7 +33,7 @@ public class Confirm extends HttpServlet {
     private static String Page = "/Fabflix/Confirm";
 	private DataSource dataSource;
     private Connection connection;
-    headerFooter base = new headerFooter();
+
     Calendar cal1 = new GregorianCalendar();
     /**
      * @see HttpServlet#HttpServlet()
@@ -97,6 +97,7 @@ HttpSession session = request.getSession();
 	public void print(HttpServletResponse response, HttpServletRequest request) throws SQLException, IOException
     {
 		PrintWriter out = response.getWriter();
+	    headerFooter base = new headerFooter(request.getSession());
 		String fname = request.getParameter("fname");
 		String lname = request.getParameter("lname");
 		String address = request.getParameter("address");

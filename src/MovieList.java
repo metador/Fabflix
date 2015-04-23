@@ -19,7 +19,6 @@ public class MovieList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DataSource dataSource;
     private Connection connection;
-	headerFooter base = new headerFooter();
 	String sort_by = null;
 	int ipp = 0;
 	
@@ -46,6 +45,7 @@ public class MovieList extends HttpServlet {
 	{
 		// TODO Auto-generated method stub;
 		PrintWriter out = response.getWriter();
+	    headerFooter base = new headerFooter(request.getSession());
 		sort_by = request.getParameter("by");
 		String query=null;
 		String query_count="0";

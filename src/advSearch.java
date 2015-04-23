@@ -59,7 +59,7 @@ public class advSearch extends HttpServlet {
 		//PreparedStatement ps_movies = (PreparedStatement) connection.prepareStatement(query);
 		//ResultSet movies = ps_movies.executeQuery();
 		PrintWriter out = response.getWriter();
-		 headerFooter base = new headerFooter();
+	    headerFooter base = new headerFooter(request.getSession());
 		 out.println(base.header());
 			out.println("<HEAD><TITLE>Login Page</TITLE></HEAD>");
 			out.println(base.banner());

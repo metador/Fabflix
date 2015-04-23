@@ -22,6 +22,7 @@ public class advSearchRes extends HttpServlet {
     private Connection connection;
 	String sort_by = null;
 	int ipp = 0;
+	headerFooter base = null;
     /**
      * @param connection 
      * @see HttpServlet#HttpServlet()
@@ -45,7 +46,7 @@ public class advSearchRes extends HttpServlet {
 	{
 		// TODO Auto-generated method stub;
 		PrintWriter out = response.getWriter();
-		headerFooter base = new headerFooter();
+		base = new headerFooter(request.getSession());
 		 sort_by = request.getParameter("by");
 		String query=null;
 		String query_count="0";

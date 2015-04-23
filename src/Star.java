@@ -28,7 +28,6 @@ public class Star extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DataSource dataSource;
     private Connection connection;
-	headerFooter base = new headerFooter();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -67,6 +66,7 @@ public class Star extends HttpServlet {
 	public void print(HttpServletResponse response, HttpServletRequest request) throws SQLException, IOException
 	{
 		connection = (Connection) dataSource.getConnection();
+	    headerFooter base = new headerFooter(request.getSession());
 		int star_id = Integer.parseInt(request.getParameter("StarID"));
 		String query = "Select * from stars where id like '" + star_id + "'";
 		PreparedStatement ps_star = (PreparedStatement) connection.prepareStatement(query);

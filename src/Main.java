@@ -46,7 +46,7 @@ public class Main extends HttpServlet {
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-    	headerFooter base = new headerFooter();
+        headerFooter base = new headerFooter(request.getSession());
 		 PrintWriter out = response.getWriter();
 		 out.println(base.header());
 		 out.println("<TITLE>" +"Main Page" +
