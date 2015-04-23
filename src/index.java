@@ -107,8 +107,8 @@ public class index extends HttpServlet {
 					 
 				 }else{
 				String mess="Username or password incorrect";
-		 response.sendRedirect("/Fabllix/index.html?message="+mess);  
-		 out.println("<tr>" + "<td>" + message+ "</td>" +"</tr>");
+		 response.sendRedirect("/Fabflix/index.html?message="+mess);  
+		 out.println("<tr><center>" + "<td>" + message+ "</td></center>" +"</tr>");
 		          }
 		
 		          out.println("</TABLE>");

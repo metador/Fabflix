@@ -22,7 +22,16 @@ public class advSearchRes extends HttpServlet {
     private Connection connection;
 	String sort_by = null;
 	int ipp = 0;
+<<<<<<< HEAD
 	headerFooter base = null;
+=======
+	 
+	String title = null;
+	String year = null;
+	String director =null;
+	String s_first = null;
+	String s_last = null;
+>>>>>>> origin/master
     /**
      * @param connection 
      * @see HttpServlet#HttpServlet()
@@ -82,7 +91,7 @@ public class advSearchRes extends HttpServlet {
 			}
 	if(sipp==null)
 		sipp="5";
-	int page_id=Integer.parseInt(spage_id)-1;
+	int page_id=Integer.parseInt(spage_id);
 	   ipp=Integer.parseInt(sipp);
 	
 	/*	switch(sort_by){
@@ -119,11 +128,13 @@ public class advSearchRes extends HttpServlet {
 			//out.println(query); 
 		
 			 
-			String title = request.getParameter("title");
-			String year = request.getParameter("year");
-			String director = request.getParameter("director");
-			String s_first = request.getParameter("s_first");
-			String s_last = request.getParameter("s_last");
+			title = request.getParameter("title");
+			 year = request.getParameter("year");
+			director = request.getParameter("director");
+			s_first = request.getParameter("s_first");
+			s_last = request.getParameter("s_last");
+			
+			
 			if(!title.equals("")){
 				query=query+" and movies.title like '%"+title.replaceAll("'", "''")+"%' ";
 			}
@@ -147,7 +158,7 @@ public class advSearchRes extends HttpServlet {
 			}
 			query=query.replaceFirst("and", "");
 			query_count=query.replace("distinct title", "count(distinct title)");
-			query=query + " order by "+order_accord+" "+orderby+" LIMIT "+ipp+" OFFSET "+ipp*page_id;
+			query=query + " order by "+order_accord+" "+orderby+" LIMIT "+ipp+" OFFSET "+ipp*(page_id-1);
 	//	out.println(""+query+ " ");
 			/*	brea
 		default:
@@ -200,13 +211,15 @@ public class advSearchRes extends HttpServlet {
 			if(i<=0)i=1;
 			int displayed_count=0;
 			out.println("<tr style=\"background-color:#00CCFF;\"><td align=\"center\">");
-			for(;i<=page_id+5 ;i++)
+			for(;i<=page_id+3 ;i++)
 				if(displayed_count<=count)
 				{
 					displayed_count=displayed_count+ipp;
 					out.println("<a style=\"float:left\" class=\"ft_links\" href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(i)+"&ipp="+ipp+"&order="+orderedStatus+" >"+i+"</a>");
 				}
 			out.println("<span style=\"float:left;color:white;margin-top:10px;font-weight: bold;\">&nbsp&nbsp&nbsp<--Page Number</span>");
+			out.println("<a style=\"float:left\" class=\"ft_links\" href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(page_id+1)+"&ipp="+ipp+"&order="+orderedStatus+" >Next page</a>");
+			out.println("<a style=\"float:left\" class=\"ft_links\" href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(page_id-1)+"&ipp="+ipp+"&order="+orderedStatus+" >Previous page</a>");
 
 			out.print("<br>");
 			
@@ -233,11 +246,11 @@ public class advSearchRes extends HttpServlet {
 		out.println("<table id=\"srch_res\"><tr style=\"background-color:#00CCFF;\"><th>");
 		out.println("<h2 style=\"margin-left:10%;\">Search Results:</h2></th></tr>"
 				+ "<tr style=\"background-color:#00CCFF;\"><td align=\"center\" >");
-		out.println("<div align\"center\"><a class=\"sort_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=t_asc>"
+		out.println("<div align\"center\"><a class=\"sort_links\" href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(1)+"&ipp="+ipp+"&order=t_asc>"
 				+ "<img src=\"http://goo.gl/QklvbJ?gdriveurl\" height='34' width='34'>Title</a>");
-		out.println("<a class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=t_desc >Title</a>");
-		out.println("<a class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=d_asc >Year-> Asec</a>");
-		out.println("<a class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+ipp+"&order=d_desc >Year-> Dsec</a>"
+		out.println("<a class=\"ft_links\" href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(1)+"&ipp="+ipp+"&order=t_desc >Title</a>");
+		out.println("<a class=\"ft_links\" href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(1)+"&ipp="+ipp+"&order=d_asc >Year-> Asec</a>");
+		out.println("<a class=\"ft_links\" href=/Fabflix/advSearchRes?by="+sort_by+"&title="+title+"&year="+year+"&director="+director+"&s_first="+s_first+"&s_last="+s_last+"&page_id="+(1)+"&ipp="+ipp+"&order=d_desc >Year-> Dsec</a>"
 				+ "</div><br></td></tr>");
 		if (movies.next())
 		{
