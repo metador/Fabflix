@@ -108,8 +108,11 @@ HttpSession session = request.getSession();
 		String custid = "Select id from customers where first_name = '" + fname + "' and password = '" + password + "';";
 		PreparedStatement ps_custid = (PreparedStatement) connection.prepareStatement(custid);
 		ResultSet id = ps_custid.executeQuery();
-		id.next();
-		int customer_id = Integer.parseInt(id.getString("id"));
+		int customer_id = 0;
+		if (id.next())
+			customer_id = Integer.parseInt(id.getString("id"));
+		else	
+			response.sendRedirect("/Fabflix/index.html");
 		
 		String custupdate = "update customers set first_name = '" + fname + "'"
 				+ ", email = '" + email + "'"

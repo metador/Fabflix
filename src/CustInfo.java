@@ -107,8 +107,11 @@ public class CustInfo extends HttpServlet {
 		String custid = "Select id from customers where first_name = '" + User + "' and password = '" + Pass + "';";
 		PreparedStatement ps_custid = (PreparedStatement) connection.prepareStatement(custid);
 		ResultSet id = ps_custid.executeQuery();
-		id.next();
-		int customer_id = Integer.parseInt(id.getString("id"));
+		int customer_id = 0;
+		if (id.next())
+			customer_id = Integer.parseInt(id.getString("id"));
+		else	
+			response.sendRedirect("/Fabflix/index.html");
 		
 		String custinfo = "Select * from customers where id = '" + customer_id + "';";
 		PreparedStatement ps_custinfo = (PreparedStatement) connection.prepareStatement(custinfo);

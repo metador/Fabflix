@@ -4,12 +4,12 @@ import javax.servlet.http.HttpSession;
 public class headerFooter {
 	
 	public boolean loggedin = false;
-	String User = "Dummy";
+	String User = null;
 	
 	public headerFooter(HttpSession session)
 	{
 		User = (String) session.getAttribute("User");
-		if (!(User == "Dummy") || (User == null))
+		if (!(User == null))
 			loggedin = true;
 	}
 	
@@ -34,7 +34,7 @@ public class headerFooter {
 				if (loggedin)
 					banner += "<button class=\"home\" onclick=\"location.href='/Fabflix/index.html'\"><img style=\"float:left;\"src=\"http://goo.gl/wwTkAq?gdriveurl\" height=\"34\" width=\"34\">Sign Out</button>"; 
 				else
-					banner += "<button class=\"home\" onclick=\"location.href='/Fabflix/index.html'\"><img style=\"float:left;\"src=\"http://goo.gl/wwTkAq?gdriveurl\" height=\"34\" width=\"34\">Sign In</button>"; 
+				{	banner += "<button class=\"home\" onclick=\"location.href='/Fabflix/index.html'\"><img style=\"float:left;\"src=\"http://goo.gl/wwTkAq?gdriveurl\" height=\"34\" width=\"34\">Sign In</button>"; }
 				banner += "<button class=\"home\" onclick=\"location.href='/Fabflix/advSearch'\"><img style=\"float:left;\"src=\"http://goo.gl/sAojdW?gdriveurl\" height=\"34\" width=\"34\">Advanced Search</button>" + 
 				"<button class=\"home\" onclick=\"location='/Fabflix/Main'\"><img style=\"float:left;\"src=\"http://goo.gl/RdfXu3?gdriveurl\" height=\"34\" width=\"34\">&nbspHome</button>" + 
 
