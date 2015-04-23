@@ -79,7 +79,7 @@ public class MovieList extends HttpServlet {
 		}
 	if(sipp==null)
 		sipp="5";
-	int page_id=Integer.parseInt(spage_id)-1;
+	int page_id=Integer.parseInt(spage_id);
 	ipp=Integer.parseInt(sipp);
 	
 		switch(sort_by){
@@ -88,7 +88,7 @@ public class MovieList extends HttpServlet {
 			String genre_id=request.getParameter("arg");
 			query="select * from movies "+
 			      "join  genres_in_movies on movies.id=genres_in_movies.movie_id "+
-			      "where genres_in_movies.genre_id="+genre_id+" order by "+order_accord+" "+orderby+" LIMIT "+ipp+" OFFSET "+ipp*page_id; 
+			      "where genres_in_movies.genre_id="+genre_id+" order by "+order_accord+" "+orderby+" LIMIT "+ipp+" OFFSET "+ipp*(page_id-1); 
 			query_count="select count(*) from movies "+
 				      "join  genres_in_movies on movies.id=genres_in_movies.movie_id "+
 					  "where genres_in_movies.genre_id="+genre_id; 
@@ -96,14 +96,14 @@ public class MovieList extends HttpServlet {
 			break;
 		case "title" :
 			String title=request.getParameter("arg");
-			query="Select * from movies where title like '"+title+"%'"+" order by "+order_accord+" "+orderby+" LIMIT "+ipp+" OFFSET "+ipp*page_id ;
+			query="Select * from movies where title like '"+title+"%'"+" order by "+order_accord+" "+orderby+" LIMIT "+ipp+" OFFSET "+ipp*(page_id-1) ;
 			query_count="Select count(*) from movies where title like '"+title+"%'";
 			
 			break;
 			
 		case "search" :
 			String search_term=request.getParameter("arg");
-			query="Select * from movies where title like '%"+search_term.replace("'", "''")+"%'"+" order by "+order_accord+" "+orderby+" LIMIT "+ipp+" OFFSET "+ipp*page_id;
+			query="Select * from movies where title like '%"+search_term.replace("'", "''")+"%'"+" order by "+order_accord+" "+orderby+" LIMIT "+ipp+" OFFSET "+ipp*(page_id-1);
 			query_count="Select count(*) from movies where title like '% "+search_term.replace("'", "''")+"%'";
 			//out.println(query);
 			break;
@@ -162,10 +162,20 @@ public class MovieList extends HttpServlet {
 			Integer count = countrs.getInt(1);
 			int i=page_id-2;
 			if(i<=0)i=1;
+			int displayed_count=0;
 			out.println("<tr style=\"background-color:#00CCFF;\"><td align=\"center\">");
-			for(;i<=page_id+5 && i<=count/ipp;i++) // for pagenation
+			for(;i<=page_id+3;i++) // for pagenation
+				if(displayed_count<=count)
+				{
+					displayed_count=displayed_count+ipp;
 				out.println("<a style=\"float:left\" class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(i)+"&ipp="+ipp+"&order="+ordered_state+" >"+i+"</a>");
+				}
 			out.println("<span style=\"float:left;color:white;margin-top:10px;font-weight: bold;\">&nbsp&nbsp&nbsp<--Page Number</span>");
+			if(page_id*ipp+1<=count)
+			out.println("<a style=\"float:left\" class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(page_id+1)+"&ipp="+ipp+"&order="+ordered_state+" >Next page</a>");
+			if(page_id-1>=1)
+			out.println("<a style=\"float:left\" class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(page_id-1)+"&ipp="+ipp+"&order="+ordered_state+" >Previous page</a>");
+
 			for(int j=5;j<=25;j=j+5)  // to set movies per page
 				out.println("<a style=\"float:right\" class=\"ft_links\" href=/Fabflix/MovieList?by="+sort_by+"&arg="+request.getParameter("arg")+"&page_id="+(1)+"&ipp="+j+"&order="+ordered_state+">"+j+"</a>");	
 			out.println("<span style=\"float:right;color:white;margin-top:10px;font-weight: bold;\">Items per page-->&nbsp&nbsp&nbsp</span>");
